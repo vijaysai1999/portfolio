@@ -2,97 +2,111 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vijay Sai Kishore Babu | Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
-  <header>
-    <h1 class="fade-in">Vijay Sai Kishore Babu</h1>
-    <div class="subtitle fade-in">Ultra Modern Portfolio — Software Developer • Mainframe & Java</div>
-    <div class="contact">Chennai, India | vijaysai1999@gmail.com | 91 8807373279</div>
+  <!-- Theme Toggle -->
+  <button id="theme-toggle" class="theme-btn"><i data-feather="moon"></i></button>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="profile-pic">
+      <img src="profile.jpg" alt="Vijay Sai Kishore Babu">
+    </div>
+    <h1>Hi, I'm <span class="gradient-text">Vijay Sai Kishore Babu</span></h1>
+    <p class="tagline">Software Developer | Mainframes & Java | Cloud Enthusiast</p>
+    <a href="#contact" class="btn">Let’s Connect</a>
   </header>
-  <div class="container">
-    <section id="objective" class="fade-in">
-      <h2>Career Objective</h2>
-      <p>
-        Motivated software professional skilled in <strong>Java</strong> and <strong>Mainframe</strong> technologies, delivering impactful solutions across legacy and modern platforms. Passionate about continuous learning, emerging tech, and driving organizational growth.
-      </p>
-    </section>
-    <section id="skills" class="fade-in">
-      <h2>Technical Skills</h2>
-      <div class="skills">
-        <span class="skill-badge">Java</span>
-        <span class="skill-badge">Spring Boot</span>
-        <span class="skill-badge">Spring MVC</span>
-        <span class="skill-badge">RESTful APIs</span>
-        <span class="skill-badge">COBOL</span>
-        <span class="skill-badge">JCL</span>
-        <span class="skill-badge">CICS</span>
-        <span class="skill-badge">DB2</span>
-        <span class="skill-badge">VSAM</span>
-        <span class="skill-badge">IBM Mainframes</span>
-        <span class="skill-badge">Azure</span>
-        <span class="skill-badge">AWS</span>
-        <span class="skill-badge">MongoDB</span>
-        <span class="skill-badge">MySQL</span>
-        <span class="skill-badge">Agile | Scrum</span>
-        <span class="skill-badge">Git | Jenkins | Maven</span>
-        <span class="skill-badge">VS Code | Eclipse | IntelliJ</span>
+
+  <!-- About -->
+  <section class="about" id="about">
+    <h2>About Me</h2>
+    <p>
+      Motivated and results-driven software professional with 4+ years of experience 
+      in Mainframe development and Java-based web applications. Passionate about 
+      scalable solutions, emerging technologies, and continuous learning. Currently 
+      pursuing MCA at University of Mysore.
+    </p>
+  </section>
+
+  <!-- Skills -->
+  <section class="skills" id="skills">
+    <h2>Technical Skills</h2>
+    <div class="skill-grid">
+      <div class="skill-card">Java</div>
+      <div class="skill-card">Spring Boot</div>
+      <div class="skill-card">REST APIs</div>
+      <div class="skill-card">COBOL</div>
+      <div class="skill-card">CICS</div>
+      <div class="skill-card">DB2</div>
+      <div class="skill-card">JCL</div>
+      <div class="skill-card">Mainframes</div>
+      <div class="skill-card">JSP & Servlets</div>
+      <div class="skill-card">MySQL</div>
+      <div class="skill-card">MongoDB</div>
+      <div class="skill-card">Azure / AWS</div>
+      <div class="skill-card">Agile (SAFe)</div>
+      <div class="skill-card">Jenkins</div>
+      <div class="skill-card">Git</div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section class="experience" id="experience">
+    <h2>Work Experience</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <h3>Tata Consultancy Services (2023 - Present)</h3>
+        <p>Developer | System Engineer</p>
+        <ul>
+          <li>Worked on Mainframe migration & application development.</li>
+          <li>Experience in SDLC, testing & deployment of enterprise apps.</li>
+          <li>Agile PI Planning & Scrum ceremonies.</li>
+        </ul>
       </div>
-    </section>
-    <section id="experience" class="fade-in">
-      <h2>Professional Experience</h2>
-      <div class="timeline">
-        <div class="timeline-entry">
-          <strong>Developer</strong> – Tata Consultancy Services (TCS), Chennai<br>
-          <em>May 2023 – Present</em>
-          <ul>
-            <li>Develop, test, and deploy enterprise-level Mainframe applications.</li>
-            <li>Key player in mainframe migration projects; design, coding, and deployment tasks.</li>
-            <li>Work within SAFe Agile, participate in PI Planning and Scrum ceremonies.</li>
-          </ul>
-        </div>
-        <div class="timeline-entry">
-          <strong>Senior Systems Associate</strong> – Infosys Ltd, Chennai (Client: Royal Bank of Scotland)<br>
-          <em>June 2021 – May 2023</em>
-          <ul>
-            <li>Led mainframe development projects covering SDLC phases.</li>
-            <li>Migration, customization, technical documentation, team collaboration.</li>
-          </ul>
-        </div>
+      <div class="timeline-item">
+        <h3>Infosys Ltd (2021 - 2023)</h3>
+        <p>Senior Systems Associate | Mainframe Developer</p>
+        <ul>
+          <li>Developed and maintained mainframe applications for RBS.</li>
+          <li>Hands-on with COBOL, JCL, CICS, DB2.</li>
+          <li>Collaborated with global teams in Agile framework.</li>
+        </ul>
       </div>
-    </section>
-    <section id="education" class="fade-in">
-      <h2>Education</h2>
-      <ul>
-        <li>MCA (Ongoing, University of Mysore, Online)</li>
-        <li>B.Sc., University of Madras (2016-2019)</li>
-        <li>Higher Secondary, St. Peters, Chennai (2014-2016)</li>
-        <li>SSLC, St. Peters, Chennai (2013-2014)</li>
-      </ul>
-    </section>
-    <section id="details" class="fade-in">
-      <h2>Personal Details</h2>
-      <dl class="details">
-        <dt>Date of Birth</dt>
-        <dd>13-June-1999</dd>
-        <dt>Nationality</dt>
-        <dd>Indian</dd>
-        <dt>Marital Status</dt>
-        <dd>Single</dd>
-        <dt>Languages</dt>
-        <dd>English, Telugu, Tamil</dd>
-        <dt>Location</dt>
-        <dd>Chennai, Tamil Nadu</dd>
-      </dl>
-    </section>
-  </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section class="education" id="education">
+    <h2>Education</h2>
+    <ul>
+      <li><b>MCA</b> – University of Mysore (Ongoing)</li>
+      <li><b>B.Sc (2016 - 2019)</b> – University of Madras</li>
+      <li><b>HSC</b> – St. Peters Hr. Sec. School, Chennai</li>
+      <li><b>SSLC</b> – St. Peters Hr. Sec. School, Chennai</li>
+    </ul>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <h2>Contact Me</h2>
+    <p>Feel free to reach out via:</p>
+    <div class="contact-links">
+      <a href="mailto:vijaysai1999@gmail.com"><i data-feather="mail"></i></a>
+      <a href="https://github.com/" target="_blank"><i data-feather="github"></i></a>
+      <a href="https://linkedin.com/" target="_blank"><i data-feather="linkedin"></i></a>
+      <a href="tel:+918807373279"><i data-feather="phone"></i></a>
+    </div>
+  </section>
+
   <footer>
-    &copy; 2025 Vijay Sai Kishore Babu. Crafted with <span class="footer-accent">modernity</span> and <span class="footer-color">color</span>.
-    <br>
-    <span class="footer-note">Let's build the future!</span>
+    <p>© 2025 Vijay Sai Kishore Babu | Built with ❤️</p>
   </footer>
+
   <script src="app.js"></script>
+  <script>feather.replace();</script>
 </body>
 </html>
