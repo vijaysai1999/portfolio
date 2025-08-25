@@ -1,437 +1,370 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vijay Sai Kishore Babu — Portfolio</title>
-  <meta name="description" content="Ultra‑modern, dynamic portfolio of Vijay Sai Kishore Babu — Java & Mainframe developer (TCS)." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>💠</text></svg>">
-  <meta name="color-scheme" content="dark light" />
-  
-  <!-- ====== Styles (inline for GitHub Pages one‑file demo). For separate files, see bottom notes. ====== -->
-  <style>
-    :root{
-      --bg: #0b0d10;         /* base background */
-      --panel: #0f131a;      /* card background */
-      --text: #e6eefc;       /* primary text */
-      --muted:#9db2ce;       /* secondary text */
-      --brand: linear-gradient(135deg, #7c3aed 0%, #06b6d4 50%, #22d3ee 100%);
-      --ring: #8b5cf6;       /* focus ring */
-      --glass: rgba(255,255,255,.06);
-      --border: rgba(255,255,255,.12);
-      --shadow: 0 20px 45px rgba(0,0,0,.45);
-    }
-    @media (prefers-color-scheme: light){
-      :root{--bg:#f7fafc; --panel:#ffffff; --text:#0b1220; --muted:#5a6a85; --glass: rgba(0,0,0,.04); --border: rgba(0,0,0,.12); --shadow: 0 20px 45px rgba(0,0,0,.1)}
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font: 500 16px/1.6 Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
-      background: radial-gradient(1200px 800px at 20% -10%, #1a1036 0, transparent 60%),
-                  radial-gradient(1000px 800px at 120% 20%, #003e5a 0, transparent 55%),
-                  var(--bg);
-      color:var(--text);
-      overflow-x:hidden;
-    }
-    a{color:inherit; text-decoration:none}
-    .grid{display:grid; gap:1.2rem}
-    .container{width:min(1100px, 92vw); margin:0 auto;}
-
-    /* Animated gradient blob background */
-    .blob{
-      position:fixed; inset:auto -20vmax -30vmax auto; width:60vmax; height:60vmax; filter: blur(60px); z-index:-1;
-      background: radial-gradient(circle at 30% 30%, rgba(124,58,237,.35), transparent 40%),
-                  radial-gradient(circle at 70% 40%, rgba(6,182,212,.35), transparent 40%),
-                  radial-gradient(circle at 50% 70%, rgba(34,211,238,.35), transparent 40%);
-      animation:blob 18s ease-in-out infinite alternate;
-    }
-    @keyframes blob{from{transform:translate(0,0) rotate(0)} to{transform:translate(-10vmax, -6vmax) rotate(8deg)}}
-
-    /* Header */
-    header{
-      position:sticky; top:0; backdrop-filter:saturate(140%) blur(8px); z-index:50;
-      background:linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,0));
-      border-bottom:1px solid var(--border);
-    }
-    nav{display:flex; align-items:center; justify-content:space-between; padding:12px 0}
-    .brand{display:flex; align-items:center; gap:.7rem}
-    .logo{width:36px; height:36px; border-radius:12px; background:var(--brand); box-shadow: var(--shadow)}
-    .brand h1{font-size:1rem; letter-spacing:.3px; margin:0; font-weight:700}
-    .nav-actions{display:flex; gap:.6rem}
-    .btn{
-      border:1px solid var(--border); background:var(--glass); color:var(--text);
-      padding:.55rem .85rem; border-radius:14px; display:inline-flex; align-items:center; gap:.5rem; cursor:pointer;
-      transition:.18s ease transform, .18s ease background;
-    }
-    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.08)}
-    .btn.primary{background:var(--brand); border-color:transparent; color:white; font-weight:700}
-
-    /* Hero */
-    .hero{padding:8vmax 0 5vmax;}
-    .hero h2{font-size: clamp(2rem, 3.5vw + 1rem, 4rem); line-height:1.1; margin:0 0 .4rem;}
-    .gradient-text{background:var(--brand); -webkit-background-clip:text; background-clip:text; color:transparent}
-    .subtitle{color:var(--muted); font-size:1.05rem}
-    .hero-cards{display:grid; grid-template-columns: repeat(12, 1fr); gap:1rem; margin-top:2rem}
-    .card{grid-column: span 6; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border:1px solid var(--border); border-radius:22px; padding:1.2rem; box-shadow:var(--shadow); position:relative; overflow:hidden}
-    @media (max-width: 860px){.card{grid-column: span 12}}
-
-    .card:hover .shine{opacity:.18; transform:translate(-10%, -10%) rotate(12deg)}
-    .shine{position:absolute; inset:auto -20% -30% auto; width:70%; height:70%; pointer-events:none; opacity:.06; transition:.35s ease; background: radial-gradient(closest-side, rgba(255,255,255,.9), transparent 60%)}
-
-    .kv{display:flex; align-items:center; gap:1rem; flex-wrap:wrap}
-    .kv .k{color:var(--muted); font-weight:600; font-size:.9rem}
-    .kv .v{font-weight:700}
-
-    /* Section */
-    section{padding:5vmax 0}
-    .section-title{display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1.2rem}
-    .section-title h3{margin:0; font-size:1.3rem; letter-spacing:.2px}
-    .section-title .rule{flex:1; height:1px; background:linear-gradient(90deg, var(--border), transparent)}
-
-    .skills{display:flex; flex-wrap:wrap; gap:.6rem}
-    .chip{padding:.5rem .7rem; border-radius:999px; border:1px solid var(--border); background:var(--glass); font-weight:600; font-size:.9rem}
-
-    /* Timeline */
-    .timeline{position:relative; margin-top:.6rem}
-    .timeline::before{content:""; position:absolute; left:12px; top:0; bottom:0; width:2px; background:linear-gradient(180deg, #7c3aed44, transparent)}
-    .tl-item{display:grid; grid-template-columns:24px 1fr; gap:.8rem; padding:.6rem 0}
-    .tl-dot{width:24px; height:24px; border-radius:12px; background:radial-gradient(circle at 35% 35%, #22d3ee, #7c3aed); border:2px solid #0b0d10; box-shadow:0 0 0 3px rgba(124,58,237,.25)}
-    .tl-card{background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; padding:1rem}
-    .role{font-weight:800}
-    .meta{color:var(--muted); font-size:.92rem}
-
-    /* Projects (placeholders) */
-    .projects{display:grid; grid-template-columns: repeat(12, 1fr); gap:1rem}
-    .project{grid-column: span 6; border:1px solid var(--border); background:var(--panel); border-radius:18px; overflow:hidden; position:relative; isolation:isolate}
-    .project .media{aspect-ratio: 16/9; background:linear-gradient(135deg, rgba(124,58,237,.35), rgba(6,182,212,.35));}
-    .project .content{padding:1rem}
-    .tag{font-size:.75rem; opacity:.8; border:1px solid var(--border); padding:.25rem .5rem; border-radius:999px}
-
-    /* Footer */
-    footer{padding:3rem 0 5rem; color:var(--muted)}
-
-    /* Motion bits */
-    .reveal{opacity:0; transform: translateY(14px);}
-    .reveal.visible{opacity:1; transform:none; transition: .6s cubic-bezier(.2,.6,.2,1)}
-    .tilt{transform-style:preserve-3d; perspective:800px}
-
-    /* Command Palette */
-    dialog#cmd{border:none; border-radius:16px; padding:0; background:var(--panel); color:var(--text); width:min(680px, 92vw); box-shadow: var(--shadow)}
-    .cmd-head{display:flex; gap:.6rem; padding:.8rem; border-bottom:1px solid var(--border)}
-    .cmd-head input{flex:1; background:transparent; border:none; outline:none; color:var(--text); font-size:1rem}
-    .cmd-list{max-height:50vh; overflow:auto;}
-    .cmd-item{padding:.8rem; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; gap:1rem; cursor:pointer}
-    .cmd-item:hover{background:rgba(255,255,255,.06)}
-
-    /* Contact floating bar */
-    .floatbar{position:fixed; right:1rem; bottom:1rem; display:flex; gap:.6rem; z-index:40}
-    .floatbar a{display:grid; place-items:center; width:48px; height:48px; border-radius:14px; background:var(--panel); border:1px solid var(--border); box-shadow:var(--shadow)}
-
-    /* Accessibility */
-    :focus-visible{outline:2px solid var(--ring); outline-offset:2px}
-  </style>
-
-  <!-- Schema.org for rich results -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Vijay Sai Kishore Babu",
-    "jobTitle": "Software Developer (Java & Mainframe)",
-    "address": {"@type":"PostalAddress","addressLocality":"Chennai","addressCountry":"IN"},
-    "email": "mailto:vijaysai1999@gmail.com",
-    "telephone": "+918807373279",
-    "knowsAbout": ["Core Java","Spring Boot","REST APIs","COBOL","JCL","CICS","DB2","Jenkins","Maven","Git","Azure AZ-900","AWS CCP"],
-    "url": "https://<your-username>.github.io"
-  }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vijay Sai Kishore Babu - Software Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="blob" aria-hidden="true"></div>
-  <header>
-    <div class="container">
-      <nav>
-        <div class="brand">
-          <div class="logo" aria-hidden="true"></div>
-          <h1>Vijay Sai Kishore Babu</h1>
+    <!-- Particles Background -->
+    <div id="particles-bg"></div>
+    
+    <!-- Header Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">VSK</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
         </div>
-        <div class="nav-actions">
-          <button class="btn" id="themeToggle" aria-label="Toggle theme">🌓 Theme</button>
-          <a class="btn" href="#contact">Contact</a>
-          <button class="btn primary" id="openCmd" aria-label="Open command palette">⌘K / Ctrl K</button>
-        </div>
-      </nav>
-    </div>
-  </header>
+    </nav>
 
-  <main class="container">
-    <!-- Hero -->
-    <section class="hero grid">
-      <div class="grid" style="gap: .8rem;">
-        <h2 class="reveal">Hi, I'm <span class="gradient-text">Vijay</span> —
-          <span class="gradient-text">Java & Mainframe</span> Developer crafting scalable systems.</h2>
-        <p class="subtitle reveal">4+ years building enterprise applications across legacy and modern stacks (TCS, Infosys). SAFe Agile, cloud‑aware, and documentation‑driven.</p>
-        <div class="hero-cards">
-          <article class="card tilt reveal">
-            <div class="shine"></div>
-            <div class="kv"><span class="k">Location</span><span class="v">Chennai, IN</span></div>
-            <div class="kv"><span class="k">Email</span><a class="v" href="mailto:vijaysai1999@gmail.com">vijaysai1999@gmail.com</a></div>
-            <div class="kv"><span class="k">Phone</span><a class="v" href="tel:+918807373279">+91 88073 73279</a></div>
-            <div class="kv"><span class="k">Languages</span><span class="v">English · Telugu · Tamil</span></div>
-          </article>
-          <article class="card tilt reveal">
-            <div class="shine"></div>
-            <div class="kv"><span class="k">Primary</span><span class="v">Core Java · Spring Boot · REST APIs</span></div>
-            <div class="kv"><span class="k">Mainframe</span><span class="v">COBOL · JCL · CICS · DB2</span></div>
-            <div class="kv"><span class="k">Tools</span><span class="v">Git · Jenkins · Maven/Gradle</span></div>
-            <div class="kv"><span class="k">Cloud</span><span class="v">Azure AZ‑900 · AWS CCP</span></div>
-          </article>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-image">
+                <div class="profile-circle">
+                    <div class="profile-img">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    Hi, I'm <span class="gradient-text">Vijay Sai Kishore Babu</span>
+                </h1>
+                <div class="hero-subtitle">
+                    <span class="typing-text" id="typing-text"></span>
+                </div>
+                <p class="hero-description">
+                    Motivated software professional with 4+ years of expertise in Mainframe technologies and Java development.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn--primary glow-effect">Get In Touch</a>
+                    <a href="#about" class="btn btn--outline">Learn More</a>
+                </div>
+            </div>
         </div>
-      </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
     </section>
 
-    <!-- Skills -->
-    <section id="skills">
-      <div class="section-title">
-        <h3>Skills</h3>
-        <div class="rule"></div>
-        <a class="btn" href="#experience">Experience ↓</a>
-      </div>
-      <div class="skills" id="skillsChips"></div>
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">About Me</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="about-description">
+                        Motivated and results-driven software professional with expertise in both Mainframe technologies and Java development. 
+                        Adept at delivering impactful, scalable solutions across legacy and modern platforms. Passionate about continuous learning, 
+                        embracing emerging technologies, and taking on new challenges to drive technical and professional growth while contributing 
+                        to team and organizational success.
+                    </p>
+                </div>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-number" data-count="4">0</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-count="10">0</div>
+                        <div class="stat-label">Projects Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-count="2">0</div>
+                        <div class="stat-label">Certifications</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-count="15">0</div>
+                        <div class="stat-label">Technologies</div>
+                    </div>
+                </div>
+            </div>
+            <div class="education-section">
+                <h3 class="subsection-title">Education</h3>
+                <div class="education-timeline">
+                    <div class="education-item">
+                        <div class="education-year">Present</div>
+                        <div class="education-content">
+                            <h4>Master of Computer Applications</h4>
+                            <p>University of Mysore - Online Program</p>
+                            <span class="status status--success">In Progress</span>
+                        </div>
+                    </div>
+                    <div class="education-item">
+                        <div class="education-year">2019</div>
+                        <div class="education-content">
+                            <h4>Bachelor of Science</h4>
+                            <p>University of Madras, India</p>
+                            <span class="status status--success">Completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Experience Timeline -->
-    <section id="experience">
-      <div class="section-title">
-        <h3>Experience</h3>
-        <div class="rule"></div>
-      </div>
-      <div class="timeline" id="timeline"></div>
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Skills & Technologies</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="skills-content">
+                <div class="skill-category">
+                    <h3 class="skill-category-title">Primary Skills</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Core Java</span>
+                                <span class="skill-percentage">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">COBOL</span>
+                                <span class="skill-percentage">95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="95"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">JCL</span>
+                                <span class="skill-percentage">92%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="92"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Spring Framework</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">DB2</span>
+                                <span class="skill-percentage">88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="88"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="certifications-section">
+                    <h3 class="skill-category-title">Cloud Certifications</h3>
+                    <div class="cert-badges">
+                        <div class="cert-badge">
+                            <i class="fab fa-microsoft"></i>
+                            <span>Azure AZ-900</span>
+                        </div>
+                        <div class="cert-badge">
+                            <i class="fab fa-aws"></i>
+                            <span>AWS Cloud Practitioner</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tech-stack">
+                    <h3 class="skill-category-title">Technology Stack</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">
+                            <i class="fab fa-java"></i>
+                            <span>Java</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-leaf"></i>
+                            <span>Spring</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-database"></i>
+                            <span>DB2</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-server"></i>
+                            <span>CICS</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fab fa-git-alt"></i>
+                            <span>Git</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-cloud"></i>
+                            <span>Azure</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fab fa-aws"></i>
+                            <span>AWS</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-code"></i>
+                            <span>VS Code</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Projects / Case Studies (placeholders to replace with your work) -->
-    <section id="projects">
-      <div class="section-title">
-        <h3>Featured Work</h3>
-        <div class="rule"></div>
-        <a class="btn" href="https://github.com/<your-username>?tab=repositories" target="_blank" rel="noreferrer">More on GitHub →</a>
-      </div>
-      <div class="projects" id="projectsGrid"></div>
-      <p class="subtitle" style="margin-top:.6rem">Tip: Replace these placeholders with 2–4 concise case studies. Link to repos and add short problem → solution → impact notes.</p>
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Work Experience</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="experience-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">May 2023 - Present</div>
+                    <div class="timeline-content">
+                        <div class="company-logo">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3 class="job-title">System Engineer</h3>
+                        <h4 class="company-name">Tata Consultancy Services (TCS)</h4>
+                        <p class="job-location">Chennai, India</p>
+                        <div class="job-responsibilities">
+                            <ul>
+                                <li>Experience in all facets of Software Development Life Cycle (SDLC)</li>
+                                <li>Outstanding technical skills with JCL, COBOL, CICS, DB2 and IBM Mainframe Systems</li>
+                                <li>Good knowledge on migration process from mainframe to other systems</li>
+                                <li>Testing and deployment of code in migration process</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">June 2021 - May 2023</div>
+                    <div class="timeline-content">
+                        <div class="company-logo">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3 class="job-title">Senior Systems Associate</h3>
+                        <h4 class="company-name">Infosys Ltd</h4>
+                        <p class="job-location">Chennai, India</p>
+                        <p class="client-name">Client: Royal Bank of Scotland</p>
+                        <div class="job-responsibilities">
+                            <ul>
+                                <li>Experience in all facets of SDLC including requirements gathering, designing, coding, testing</li>
+                                <li>Worked in SAFe Agile framework and follow PI Planning and Scrum ceremonies</li>
+                                <li>Outstanding technical and analytical skills with mainframe technologies</li>
+                                <li>Talented communicator building relationships with onsite/offshore team members</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Education & Certifications -->
-    <section id="education">
-      <div class="section-title">
-        <h3>Education & Certifications</h3>
-        <div class="rule"></div>
-      </div>
-      <div class="grid">
-        <div class="card reveal">
-          <div class="shine"></div>
-          <div class="role">B.Sc., University of Madras</div>
-          <div class="meta">2016 – 2019</div>
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Let's Connect</h3>
+                    <p>I'm always interested in discussing new opportunities and exciting projects.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>vijaysai1999@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+91 8807373279</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Chennai, India</span>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Your Name" required>
+                        <label for="name" class="form-label">Name</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Your Email" required>
+                        <label for="email" class="form-label">Email</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" name="subject" class="form-control" placeholder="Subject" required>
+                        <label for="subject" class="form-label">Subject</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" rows="5" class="form-control" placeholder="Your Message" required></textarea>
+                        <label for="message" class="form-label">Message</label>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width glow-effect">
+                        Send Message
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
         </div>
-        <div class="card reveal">
-          <div class="shine"></div>
-          <div class="role">MCA (Ongoing), University of Mysore (Online)</div>
-          <div class="meta">Actively pursuing</div>
-        </div>
-        <div class="card reveal">
-          <div class="shine"></div>
-          <div class="role">Microsoft Azure Fundamentals (AZ‑900)</div>
-          <div class="meta">Certified</div>
-        </div>
-        <div class="card reveal">
-          <div class="shine"></div>
-          <div class="role">AWS Certified Cloud Practitioner</div>
-          <div class="meta">Certified</div>
-        </div>
-      </div>
     </section>
 
-    <!-- Contact -->
-    <section id="contact">
-      <div class="section-title">
-        <h3>Contact</h3>
-        <div class="rule"></div>
-      </div>
-      <div class="grid">
-        <div class="card reveal">
-          <div class="shine"></div>
-          <p>Open to Java/Spring roles, backend/API engineering, and mainframe modernization projects.</p>
-          <p>
-            <a class="btn primary" href="mailto:vijaysai1999@gmail.com?subject=Hello%20Vijay%20—%20Opportunity">Email Me</a>
-            <a class="btn" href="tel:+918807373279">Call</a>
-            <a class="btn" href="#" id="downloadVCF">Download vCard</a>
-          </p>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Vijay Sai Kishore Babu. All rights reserved.</p>
+                <p>Built with passion using HTML, CSS & JavaScript</p>
+            </div>
         </div>
-      </div>
-    </section>
-  </main>
+    </footer>
 
-  <footer class="container">
-    <div class="grid">
-      <div>© <span id="year"></span> Vijay Sai Kishore Babu. Built with vanilla HTML/CSS/JS. Deployed on GitHub Pages.</div>
-    </div>
-  </footer>
-
-  <!-- Floating Contact Bar -->
-  <div class="floatbar" aria-label="Quick actions">
-    <a href="mailto:vijaysai1999@gmail.com" title="Email">✉️</a>
-    <a href="tel:+918807373279" title="Call">📞</a>
-    <a href="https://github.com/<your-username>" target="_blank" rel="noreferrer" title="GitHub">🐙</a>
-    <a href="#" id="toTop" title="Back to top">⬆️</a>
-  </div>
-
-  <!-- Command Palette -->
-  <dialog id="cmd">
-    <div class="cmd-head">
-      <span style="padding:.4rem .6rem; border-radius:10px; background:var(--glass); border:1px solid var(--border)">⌘</span>
-      <input id="cmdInput" placeholder="Type: skills / experience / projects / contact…" aria-label="Command" />
-      <button class="btn" id="closeCmd" aria-label="Close">✕</button>
-    </div>
-    <div class="cmd-list" id="cmdList"></div>
-  </dialog>
-
-  <!-- ====== Scripts (vanilla JS only) ====== -->
-  <script>
-    // ---------- Data (from your resume) ----------
-    const DATA = {
-      name: "Vijay Sai Kishore Babu",
-      title: "Software Developer (Java & Mainframe)",
-      location: "Chennai, IN",
-      email: "vijaysai1999@gmail.com",
-      phone: "+918807373279",
-      languages: ["English","Telugu","Tamil"],
-      skills: [
-        "Core Java","OOP","Collections","Multithreading","Exceptions","I/O",
-        "Spring Boot","Spring MVC","REST APIs","JDBC","JSP","Servlets",
-        "COBOL","JCL","CICS","DB2","VSAM",
-        "Git","Jenkins","Maven","Gradle (basic)",
-        "Azure (AZ-900)","AWS CCP","Agile/SAFe","Documentation"
-      ],
-      experience: [
-        {
-          org: "Tata Consultancy Services (TCS)",
-          role: "Developer / System Engineer",
-          period: "May 2023 — Present",
-          bullets: [
-            "Full SDLC: requirements, design, coding, testing, deployment.",
-            "Mainframe modernization & migration exposure.",
-            "JCL, COBOL, CICS, DB2 on IBM z/OS; Agile (SAFe)."
-          ]
-        },
-        {
-          org: "Infosys Ltd — Client: Royal Bank of Scotland",
-          role: "Senior Systems Associate (Mainframes)",
-          period: "Jun 2021 — May 2023",
-          bullets: [
-            "Developed & maintained enterprise mainframe applications.",
-            "Collaborated across onsite/offshore; PI planning & Scrum.",
-            "Tools: Endevor, CA‑7, Xpeditor; Emulators: IBM IDz, VS Code."
-          ]
-        }
-      ],
-      projects: [
-        {
-          title: "Mainframe to Microservices PoC",
-          caption: "Explored migration path using Spring Boot APIs over legacy datasets (demo)",
-          tags: ["Spring Boot","DB2","REST"],
-          link: "#"
-        },
-        {
-          title: "Java Utilities Toolkit",
-          caption: "Reusable CLI/utility methods for file I/O, parsing, and data validation",
-          tags: ["Java","CLI"],
-          link: "#"
-        }
-      ]
-    };
-
-    // ---------- Helpers ----------
-    const $ = (q, root=document) => root.querySelector(q);
-    const $$ = (q, root=document) => [...root.querySelectorAll(q)];
-
-    // Year
-    $('#year').textContent = new Date().getFullYear();
-
-    // Build skills chips
-    const skillsEl = $('#skillsChips');
-    DATA.skills.forEach(s => {
-      const chip = document.createElement('span');
-      chip.className = 'chip reveal';
-      chip.textContent = s;
-      skillsEl.appendChild(chip);
-    });
-
-    // Build experience timeline
-    const timeline = $('#timeline');
-    DATA.experience.forEach(item => {
-      const wrap = document.createElement('div');
-      wrap.className = 'tl-item reveal';
-      wrap.innerHTML = `
-        <div class="tl-dot" aria-hidden="true"></div>
-        <div class="tl-card">
-          <div class="role">${item.role} — ${item.org}</div>
-          <div class="meta">${item.period}</div>
-          <ul style="margin:.6rem 0 0 1rem; padding:0">
-            ${item.bullets.map(b=>`<li>${b}</li>`).join('')}
-          </ul>
-        </div>`;
-      timeline.appendChild(wrap);
-    });
-
-    // Build projects grid
-    const grid = $('#projectsGrid');
-    DATA.projects.forEach(p => {
-      const card = document.createElement('article');
-      card.className = 'project reveal tilt';
-      card.innerHTML = `
-        <div class="media"></div>
-        <div class="content">
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:.6rem">
-            <h4 style="margin:.2rem 0">${p.title}</h4>
-            <a class="btn" href="${p.link}" target="_blank" rel="noreferrer">Open →</a>
-          </div>
-          <p class="subtitle" style="margin:.3rem 0 .6rem">${p.caption}</p>
-          <div style="display:flex; flex-wrap:wrap; gap:.4rem">${p.tags.map(t=>`<span class='tag'>${t}</span>`).join('')}</div>
-        </div>`;
-      grid.appendChild(card);
-    });
-
-    // Scroll reveal
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target) }})
-    }, {threshold:.2});
-    $$('.reveal').forEach(el=>io.observe(el));
-
-    // Tilt effect
-    const tiltEls = $$('.tilt');
-    tiltEls.forEach(el=>{
-      el.addEventListener('mousemove', (e)=>{
-        const r = el.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width; // 0..1
-        const y = (e.clientY - r.top) / r.height;
-        const rotX = (0.5 - y) * 8; // deg
-        const rotY = (x - 0.5) * 10;
-        el.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-      });
-      el.addEventListener('mouseleave', ()=>{ el.style.transform = '' });
-    });
-
-    // Theme toggle (persist)
-    const themeBtn = $('#themeToggle');
-    const preferred = localStorage.getItem('theme');
-    if(preferred==='light') document.documentElement.style.colorScheme='light';
-    themeBtn.addEventListener('click', ()=>{
-      const cs = getComputedStyle(document.documentElement).colorScheme;
-      const next = cs==='dark'?'light':'dark';
-      document.documentElement.style.colorScheme = next;
-      localStorage.setItem('theme', next);
-    });
-
-    // Back to top
-    $('#toTop').addEventListener('click', (e)=>{e.preventDefault();
+    <script src="app.js"></script>
+</body>
+</html>
