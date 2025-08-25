@@ -1,479 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vijay Sai Kishore Babu - Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Vijay Sai Kishore Babu | Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Neon Grid Background -->
-    <div id="neon-grid"></div>
-    
-    <!-- Advanced Particle System -->
-    <canvas id="particle-canvas"></canvas>
-    
-    <!-- Custom Cursor -->
-    <div id="custom-cursor">
-        <div class="cursor-dot"></div>
-        <div class="cursor-ring"></div>
-    </div>
-    
-    <!-- Header Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <span class="logo-text glitch" data-text="VSK">VSK</span>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link neon-glow">HOME</a></li>
-                <li><a href="#about" class="nav-link neon-glow">ABOUT</a></li>
-                <li><a href="#skills" class="nav-link neon-glow">SKILLS</a></li>
-                <li><a href="#experience" class="nav-link neon-glow">EXPERIENCE</a></li>
-                <li><a href="#contact" class="nav-link neon-glow">CONTACT</a></li>
-            </ul>
-            <div class="nav-toggle" id="mobile-menu">
-                <span class="bar neon-bar"></span>
-                <span class="bar neon-bar"></span>
-                <span class="bar neon-bar"></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-bg-animation"></div>
-        <div class="hero-content">
-            <div class="hero-image">
-                <div class="profile-container">
-                    <div class="profile-ring rotating"></div>
-                    <div class="profile-ring-2"></div>
-                    <div class="profile-frame">
-                        <img src="https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/0af1dc32-18b6-4247-a961-6b1bba5172d8.png" 
-                             alt="Vijay Sai Kishore Babu" 
-                             class="profile-img">
-                        <div class="profile-glow"></div>
-                    </div>
-                    <div class="holographic-overlay"></div>
-                </div>
-            </div>
-            <div class="hero-text">
-                <h1 class="hero-title">
-                    <span class="cyber-text">Hi, I'm</span>
-                    <span class="gradient-text glitch-text" data-text="VIJAY SAI KISHORE BABU">VIJAY SAI KISHORE BABU</span>
-                </h1>
-                <div class="hero-subtitle">
-                    <span class="typing-text neon-cyan" id="typing-text"></span>
-                    <span class="cursor-blink">|</span>
-                </div>
-                <p class="hero-description cyber-description">
-                    > Motivated software professional with 4+ years of expertise in Mainframe technologies and Java development.
-                    <br>> Delivering cutting-edge solutions across legacy and modern platforms.
-                </p>
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-neon btn-primary">
-                        <span>CONNECT</span>
-                        <div class="btn-glow"></div>
-                    </a>
-                    <a href="#about" class="btn btn-neon btn-secondary">
-                        <span>EXPLORE</span>
-                        <div class="btn-glow"></div>
-                    </a>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-number neon-green" data-count="4">0</span>
-                        <span class="stat-label">YEARS</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number neon-pink" data-count="10">0</span>
-                        <span class="stat-label">PROJECTS</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number neon-orange" data-count="15">0</span>
-                        <span class="stat-label">TECH STACK</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <div class="scroll-text">SCROLL DOWN</div>
-            <div class="scroll-arrow neon-arrow">
-                <i class="fas fa-chevron-down"></i>
-            </div>
-        </div>
+  <header>
+    <h1 class="fade-in">Vijay Sai Kishore Babu</h1>
+    <div class="subtitle fade-in">Ultra Modern Portfolio — Software Developer • Mainframe & Java</div>
+    <div class="contact">Chennai, India | vijaysai1999@gmail.com | 91 8807373279</div>
+  </header>
+  <div class="container">
+    <section id="objective" class="fade-in">
+      <h2>Career Objective</h2>
+      <p>
+        Motivated software professional skilled in <strong>Java</strong> and <strong>Mainframe</strong> technologies, delivering impactful solutions across legacy and modern platforms. Passionate about continuous learning, emerging tech, and driving organizational growth.
+      </p>
     </section>
-
-    <!-- About Section -->
-    <section id="about" class="about section-dark">
-        <div class="section-bg"></div>
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title glitch" data-text="ABOUT_ME.EXE">ABOUT_ME.EXE</h2>
-                <div class="section-line neon-line"></div>
-            </div>
-            <div class="about-grid">
-                <div class="about-text">
-                    <div class="terminal-window">
-                        <div class="terminal-header">
-                            <div class="terminal-controls">
-                                <span class="control-dot red"></span>
-                                <span class="control-dot yellow"></span>
-                                <span class="control-dot green"></span>
-                            </div>
-                            <span class="terminal-title">~/about/vijay$</span>
-                        </div>
-                        <div class="terminal-content">
-                            <p class="terminal-text">
-                                <span class="prompt">&gt;</span> cat profile.txt<br>
-                                <span class="output neon-text">
-                                Motivated and results-driven software professional with expertise in both 
-                                Mainframe technologies and Java development. Adept at delivering impactful, 
-                                scalable solutions across legacy and modern platforms.
-                                <br><br>
-                                Passionate about continuous learning, embracing emerging technologies, 
-                                and taking on new challenges to drive technical and professional growth.
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-skills-visual">
-                    <div class="skill-radar">
-                        <div class="radar-grid"></div>
-                        <div class="radar-sweep"></div>
-                        <div class="skill-points">
-                            <div class="skill-point" data-skill="Java" style="--x: 80%; --y: 20%;"></div>
-                            <div class="skill-point" data-skill="COBOL" style="--x: 90%; --y: 60%;"></div>
-                            <div class="skill-point" data-skill="Spring" style="--x: 70%; --y: 80%;"></div>
-                            <div class="skill-point" data-skill="DB2" style="--x: 30%; --y: 70%;"></div>
-                            <div class="skill-point" data-skill="Cloud" style="--x: 20%; --y: 30%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="achievements-grid">
-                <div class="achievement-card">
-                    <div class="achievement-icon">
-                        <i class="fab fa-microsoft neon-blue"></i>
-                    </div>
-                    <div class="achievement-content">
-                        <h4>Azure Certified</h4>
-                        <p>AZ-900 Cloud Fundamentals</p>
-                    </div>
-                    <div class="card-glow blue"></div>
-                </div>
-                <div class="achievement-card">
-                    <div class="achievement-icon">
-                        <i class="fab fa-aws neon-orange"></i>
-                    </div>
-                    <div class="achievement-content">
-                        <h4>AWS Certified</h4>
-                        <p>Cloud Practitioner</p>
-                    </div>
-                    <div class="card-glow orange"></div>
-                </div>
-                <div class="achievement-card">
-                    <div class="achievement-icon">
-                        <i class="fas fa-server neon-green"></i>
-                    </div>
-                    <div class="achievement-content">
-                        <h4>Mainframe Expert</h4>
-                        <p>Legacy System Migration</p>
-                    </div>
-                    <div class="card-glow green"></div>
-                </div>
-                <div class="achievement-card">
-                    <div class="achievement-icon">
-                        <i class="fas fa-code neon-pink"></i>
-                    </div>
-                    <div class="achievement-content">
-                        <h4>Full Stack</h4>
-                        <p>Modern Development</p>
-                    </div>
-                    <div class="card-glow pink"></div>
-                </div>
-            </div>
-        </div>
+    <section id="skills" class="fade-in">
+      <h2>Technical Skills</h2>
+      <div class="skills">
+        <span class="skill-badge">Java</span>
+        <span class="skill-badge">Spring Boot</span>
+        <span class="skill-badge">Spring MVC</span>
+        <span class="skill-badge">RESTful APIs</span>
+        <span class="skill-badge">COBOL</span>
+        <span class="skill-badge">JCL</span>
+        <span class="skill-badge">CICS</span>
+        <span class="skill-badge">DB2</span>
+        <span class="skill-badge">VSAM</span>
+        <span class="skill-badge">IBM Mainframes</span>
+        <span class="skill-badge">Azure</span>
+        <span class="skill-badge">AWS</span>
+        <span class="skill-badge">MongoDB</span>
+        <span class="skill-badge">MySQL</span>
+        <span class="skill-badge">Agile | Scrum</span>
+        <span class="skill-badge">Git | Jenkins | Maven</span>
+        <span class="skill-badge">VS Code | Eclipse | IntelliJ</span>
+      </div>
     </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title glitch" data-text="SKILLS_MATRIX.SYS">SKILLS_MATRIX.SYS</h2>
-                <div class="section-line neon-line"></div>
-            </div>
-            
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3 class="category-title neon-cyan">PRIMARY_SKILLS</h3>
-                    <div class="skill-bars">
-                        <div class="skill-bar-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Core Java</span>
-                                <span class="skill-percentage">90%</span>
-                            </div>
-                            <div class="skill-bar-track">
-                                <div class="skill-bar-fill neon-blue" data-width="90"></div>
-                                <div class="skill-bar-glow"></div>
-                            </div>
-                        </div>
-                        <div class="skill-bar-item">
-                            <div class="skill-info">
-                                <span class="skill-name">COBOL</span>
-                                <span class="skill-percentage">95%</span>
-                            </div>
-                            <div class="skill-bar-track">
-                                <div class="skill-bar-fill neon-green" data-width="95"></div>
-                                <div class="skill-bar-glow"></div>
-                            </div>
-                        </div>
-                        <div class="skill-bar-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Spring Framework</span>
-                                <span class="skill-percentage">85%</span>
-                            </div>
-                            <div class="skill-bar-track">
-                                <div class="skill-bar-fill neon-pink" data-width="85"></div>
-                                <div class="skill-bar-glow"></div>
-                            </div>
-                        </div>
-                        <div class="skill-bar-item">
-                            <div class="skill-info">
-                                <span class="skill-name">DB2</span>
-                                <span class="skill-percentage">88%</span>
-                            </div>
-                            <div class="skill-bar-track">
-                                <div class="skill-bar-fill neon-orange" data-width="88"></div>
-                                <div class="skill-bar-glow"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="skill-category">
-                    <h3 class="category-title neon-green">TECH_STACK</h3>
-                    <div class="tech-hexagons">
-                        <div class="tech-hex" data-tech="Java">
-                            <div class="hex-shape">
-                                <i class="fab fa-java"></i>
-                            </div>
-                            <span class="hex-label">Java</span>
-                        </div>
-                        <div class="tech-hex" data-tech="Spring">
-                            <div class="hex-shape">
-                                <i class="fas fa-leaf"></i>
-                            </div>
-                            <span class="hex-label">Spring</span>
-                        </div>
-                        <div class="tech-hex" data-tech="DB2">
-                            <div class="hex-shape">
-                                <i class="fas fa-database"></i>
-                            </div>
-                            <span class="hex-label">DB2</span>
-                        </div>
-                        <div class="tech-hex" data-tech="Azure">
-                            <div class="hex-shape">
-                                <i class="fas fa-cloud"></i>
-                            </div>
-                            <span class="hex-label">Azure</span>
-                        </div>
-                        <div class="tech-hex" data-tech="AWS">
-                            <div class="hex-shape">
-                                <i class="fab fa-aws"></i>
-                            </div>
-                            <span class="hex-label">AWS</span>
-                        </div>
-                        <div class="tech-hex" data-tech="Git">
-                            <div class="hex-shape">
-                                <i class="fab fa-git-alt"></i>
-                            </div>
-                            <span class="hex-label">Git</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section id="experience" class="fade-in">
+      <h2>Professional Experience</h2>
+      <div class="timeline">
+        <div class="timeline-entry">
+          <strong>Developer</strong> – Tata Consultancy Services (TCS), Chennai<br>
+          <em>May 2023 – Present</em>
+          <ul>
+            <li>Develop, test, and deploy enterprise-level Mainframe applications.</li>
+            <li>Key player in mainframe migration projects; design, coding, and deployment tasks.</li>
+            <li>Work within SAFe Agile, participate in PI Planning and Scrum ceremonies.</li>
+          </ul>
         </div>
+        <div class="timeline-entry">
+          <strong>Senior Systems Associate</strong> – Infosys Ltd, Chennai (Client: Royal Bank of Scotland)<br>
+          <em>June 2021 – May 2023</em>
+          <ul>
+            <li>Led mainframe development projects covering SDLC phases.</li>
+            <li>Migration, customization, technical documentation, team collaboration.</li>
+          </ul>
+        </div>
+      </div>
     </section>
-
-    <!-- Experience Section -->
-    <section id="experience" class="experience section-dark">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title glitch" data-text="WORK_LOG.DAT">WORK_LOG.DAT</h2>
-                <div class="section-line neon-line"></div>
-            </div>
-            
-            <div class="timeline-container">
-                <div class="timeline-line neon-timeline"></div>
-                
-                <div class="timeline-item" data-year="2023">
-                    <div class="timeline-marker">
-                        <div class="marker-ring"></div>
-                        <div class="marker-core"></div>
-                    </div>
-                    <div class="timeline-content">
-                        <div class="timeline-card">
-                            <div class="card-header">
-                                <div class="company-logo tcs">
-                                    <span>TCS</span>
-                                </div>
-                                <div class="job-details">
-                                    <h3 class="job-title">System Engineer</h3>
-                                    <h4 class="company-name">Tata Consultancy Services</h4>
-                                    <p class="job-period">May 2023 - Present</p>
-                                </div>
-                            </div>
-                            <div class="job-description">
-                                <ul class="job-points">
-                                    <li><i class="fas fa-code neon-cyan"></i>Full SDLC expertise from requirements to deployment</li>
-                                    <li><i class="fas fa-server neon-green"></i>Advanced JCL, COBOL, CICS, DB2 and IBM Mainframe Systems</li>
-                                    <li><i class="fas fa-exchange-alt neon-pink"></i>Mainframe to modern platform migration specialist</li>
-                                    <li><i class="fas fa-cog neon-orange"></i>Testing and deployment automation</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="timeline-item" data-year="2021">
-                    <div class="timeline-marker">
-                        <div class="marker-ring"></div>
-                        <div class="marker-core"></div>
-                    </div>
-                    <div class="timeline-content">
-                        <div class="timeline-card">
-                            <div class="card-header">
-                                <div class="company-logo infosys">
-                                    <span>INFY</span>
-                                </div>
-                                <div class="job-details">
-                                    <h3 class="job-title">Senior Systems Associate</h3>
-                                    <h4 class="company-name">Infosys Ltd</h4>
-                                    <p class="job-period">June 2021 - May 2023</p>
-                                    <p class="client-info">Client: Royal Bank of Scotland</p>
-                                </div>
-                            </div>
-                            <div class="job-description">
-                                <ul class="job-points">
-                                    <li><i class="fas fa-tasks neon-cyan"></i>SAFe Agile framework and Scrum ceremonies</li>
-                                    <li><i class="fas fa-brain neon-green"></i>Advanced analytical skills with mainframe technologies</li>
-                                    <li><i class="fas fa-users neon-pink"></i>Cross-functional team collaboration</li>
-                                    <li><i class="fas fa-chart-line neon-orange"></i>Business objectives and requirement analysis</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section id="education" class="fade-in">
+      <h2>Education</h2>
+      <ul>
+        <li>MCA (Ongoing, University of Mysore, Online)</li>
+        <li>B.Sc., University of Madras (2016-2019)</li>
+        <li>Higher Secondary, St. Peters, Chennai (2014-2016)</li>
+        <li>SSLC, St. Peters, Chennai (2013-2014)</li>
+      </ul>
     </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title glitch" data-text="CONNECT.EXE">CONNECT.EXE</h2>
-                <div class="section-line neon-line"></div>
-            </div>
-            
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <div class="contact-terminal">
-                        <div class="terminal-header">
-                            <div class="terminal-controls">
-                                <span class="control-dot red"></span>
-                                <span class="control-dot yellow"></span>
-                                <span class="control-dot green"></span>
-                            </div>
-                            <span class="terminal-title">~/contact/info$</span>
-                        </div>
-                        <div class="terminal-content">
-                            <div class="contact-item">
-                                <i class="fas fa-envelope neon-cyan"></i>
-                                <span class="contact-label">EMAIL:</span>
-                                <span class="contact-value">vijaysai1999@gmail.com</span>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fas fa-phone neon-green"></i>
-                                <span class="contact-label">PHONE:</span>
-                                <span class="contact-value">+91 8807373279</span>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fas fa-map-marker-alt neon-pink"></i>
-                                <span class="contact-label">LOCATION:</span>
-                                <span class="contact-value">Chennai, India</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="social-matrix">
-                        <h4 class="social-title">SOCIAL_NETWORK:</h4>
-                        <div class="social-links">
-                            <a href="#" class="social-link">
-                                <i class="fab fa-linkedin"></i>
-                                <span>LinkedIn</span>
-                            </a>
-                            <a href="#" class="social-link">
-                                <i class="fab fa-github"></i>
-                                <span>GitHub</span>
-                            </a>
-                            <a href="#" class="social-link">
-                                <i class="fab fa-twitter"></i>
-                                <span>Twitter</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="contact-form-container">
-                    <form class="contact-form cyberpunk-form" id="contact-form">
-                        <h3 class="form-title">SEND_MESSAGE.PHP</h3>
-                        <div class="form-group">
-                            <input type="text" id="name" name="name" class="form-control neon-input" placeholder=" " required>
-                            <label for="name" class="form-label">NAME</label>
-                            <div class="input-glow"></div>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" class="form-control neon-input" placeholder=" " required>
-                            <label for="email" class="form-label">EMAIL</label>
-                            <div class="input-glow"></div>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="subject" name="subject" class="form-control neon-input" placeholder=" " required>
-                            <label for="subject" class="form-label">SUBJECT</label>
-                            <div class="input-glow"></div>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="message" name="message" rows="5" class="form-control neon-input" placeholder=" " required></textarea>
-                            <label for="message" class="form-label">MESSAGE</label>
-                            <div class="input-glow"></div>
-                        </div>
-                        <button type="submit" class="btn btn-neon btn-primary btn-full">
-                            <span>TRANSMIT</span>
-                            <i class="fas fa-paper-plane"></i>
-                            <div class="btn-glow"></div>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <section id="details" class="fade-in">
+      <h2>Personal Details</h2>
+      <dl class="details">
+        <dt>Date of Birth</dt>
+        <dd>13-June-1999</dd>
+        <dt>Nationality</dt>
+        <dd>Indian</dd>
+        <dt>Marital Status</dt>
+        <dd>Single</dd>
+        <dt>Languages</dt>
+        <dd>English, Telugu, Tamil</dd>
+        <dt>Location</dt>
+        <dd>Chennai, Tamil Nadu</dd>
+      </dl>
     </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p class="footer-text">© 2025 VIJAY_SAI_KISHORE_BABU.EXE | ALL_RIGHTS_RESERVED</p>
-                <p class="footer-subtitle">Built with <span class="neon-pink">♥</span> using HTML, CSS & Vanilla JavaScript</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="app.js"></script>
+  </div>
+  <footer>
+    &copy; 2025 Vijay Sai Kishore Babu. Crafted with <span class="footer-accent">modernity</span> and <span class="footer-color">color</span>.
+    <br>
+    <span class="footer-note">Let's build the future!</span>
+  </footer>
+  <script src="script.js"></script>
 </body>
 </html>
