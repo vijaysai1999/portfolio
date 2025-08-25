@@ -1,116 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vijay Sai Kishore Babu | Futuristic Portfolio</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://unpkg.com/feather-icons"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vijay Sai Kishore Babu — Portfolio</title>
+  <meta name="description" content="Mainframe Developer | Java Developer | Building scalable, modern systems" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
-  <!-- Floating background shapes -->
-  <div class="shapes">
-    <span></span><span></span><span></span><span></span><span></span>
+  <!-- Ultra background layers -->
+  <canvas id="space"></canvas>
+  <div class="bg-blobs">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+    <div class="noise"></div>
   </div>
 
-  <!-- Theme Toggle -->
-  <button id="theme-toggle" class="theme-btn"><i data-feather="moon"></i></button>
+  <!-- Theme / UI controls -->
+  <div class="ui-bar">
+    <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
+      <i data-feather="moon"></i>
+    </button>
+    <a class="icon-btn" href="#contact" aria-label="Contact">
+      <i data-feather="send"></i>
+    </a>
+  </div>
 
-  <!-- Hero -->
-  <header class="hero reveal">
-    <div class="profile-pic">
-      <img src="profile.jpg" alt="Vijay Sai Kishore Babu">
+  <!-- NAV -->
+  <nav class="nav glass">
+    <a href="#" class="brand">VS<span>KB</span></a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
     </div>
-    <h1>Hi, I'm <span class="gradient-text">Vijay Sai Kishore Babu</span></h1>
-    <p class="tagline"><span id="typed"></span></p>
-    <a href="#contact" class="btn">🚀 Let’s Connect</a>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero section">
+    <div class="hero-inner">
+      <div class="pfp-wrap" data-tilt data-tilt-max="10" data-tilt-glare="true" data-tilt-max-glare="0.2">
+        <img src="profile.jpg" alt="Vijay Sai Kishore Babu" class="pfp"/>
+        <span class="ring"></span>
+      </div>
+      <h1 class="title">
+        Hi, I'm <span class="gradient">Vijay Sai Kishore Babu</span>
+      </h1>
+      <p class="subtitle">
+        <span id="typed"></span>
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary magnet" href="mailto:vijaysai1999@gmail.com">Email Me</a>
+        <a class="btn btn-ghost magnet" href="#projects">See Projects</a>
+      </div>
+
+      <div class="quick-facts glass">
+        <div><i data-feather="map-pin"></i> Chennai, IN</div>
+        <div><i data-feather="smartphone"></i> +91 8807373279</div>
+        <div><i data-feather="mail"></i> vijaysai1999@gmail.com</div>
+        <div><i data-feather="award"></i> AZ-900 • AWS CCP</div>
+      </div>
+    </div>
   </header>
 
-  <!-- About -->
-  <section class="about reveal" id="about">
-    <h2>About Me</h2>
-    <p>
-      Motivated and results-driven software professional with 4+ years of 
-      experience in Mainframe & Java development. Passionate about building 
-      futuristic, scalable applications and embracing new technologies. 
-      Currently pursuing MCA at University of Mysore.
-    </p>
-  </section>
-
-  <!-- Skills -->
-  <section class="skills reveal" id="skills">
-    <h2>Technical Skills</h2>
-    <div class="skill-grid">
-      <div class="skill-card">Java</div>
-      <div class="skill-card">Spring Boot</div>
-      <div class="skill-card">REST APIs</div>
-      <div class="skill-card">COBOL</div>
-      <div class="skill-card">CICS</div>
-      <div class="skill-card">DB2</div>
-      <div class="skill-card">JCL</div>
-      <div class="skill-card">Mainframes</div>
-      <div class="skill-card">JSP & Servlets</div>
-      <div class="skill-card">MySQL</div>
-      <div class="skill-card">MongoDB</div>
-      <div class="skill-card">Azure / AWS</div>
-      <div class="skill-card">Agile (SAFe)</div>
-      <div class="skill-card">Jenkins</div>
-      <div class="skill-card">Git</div>
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <h2 class="section-title">About</h2>
+    <div class="grid two">
+      <div class="card glass" data-tilt>
+        <h3>Who I am</h3>
+        <p>
+          Motivated and results-driven software professional with 4+ years spanning
+          <b>Mainframe development</b> and modern <b>Java</b> stacks. I deliver scalable solutions across legacy and cloud-native platforms, 
+          working in SAFe/Agile, and I love shipping clean, reliable systems.
+        </p>
+        <p>Currently a Developer at <b>TCS</b> (since May 2023). Previously at <b>Infosys</b> building for <b>RBS</b>.</p>
+        <p>Pursuing <b>MCA</b> (University of Mysore, online) to deepen my engineering toolkit.</p>
+      </div>
+      <div class="card glass" data-tilt>
+        <h3>What I do</h3>
+        <ul class="tick">
+          <li>Java, Spring Boot, REST APIs, JSP/Servlets</li>
+          <li>Mainframes: COBOL, JCL, CICS, DB2, VSAM</li>
+          <li>CI/CD (Jenkins), Git, Maven/Gradle</li>
+          <li>Cloud: Azure (AZ-900), AWS CCP</li>
+          <li>Agile (SAFe), documentation, troubleshooting</li>
+        </ul>
+      </div>
     </div>
   </section>
 
-  <!-- Experience -->
-  <section class="experience reveal" id="experience">
-    <h2>Experience</h2>
+  <!-- SKILLS -->
+  <section id="skills" class="section">
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-wrap">
+      <div class="chip">Core Java</div><div class="chip">Spring Boot</div><div class="chip">Spring MVC</div>
+      <div class="chip">REST APIs</div><div class="chip">COBOL</div><div class="chip">JCL</div>
+      <div class="chip">CICS</div><div class="chip">DB2</div><div class="chip">VSAM</div>
+      <div class="chip">JSP</div><div class="chip">Servlets</div><div class="chip">MySQL</div>
+      <div class="chip">MongoDB (basic)</div><div class="chip">Azure</div><div class="chip">AWS</div>
+      <div class="chip">Git</div><div class="chip">Maven</div><div class="chip">Jenkins</div>
+      <div class="chip">Agile / SAFe</div>
+    </div>
+
+    <div class="bars">
+      <div class="bar glass"><span style="--val:90%">Java</span></div>
+      <div class="bar glass"><span style="--val:85%">Spring Boot</span></div>
+      <div class="bar glass"><span style="--val:88%">Mainframe (COBOL/JCL/CICS/DB2)</span></div>
+      <div class="bar glass"><span style="--val:70%">Databases (DB2/MySQL)</span></div>
+      <div class="bar glass"><span style="--val:65%">Cloud (Azure/AWS)</span></div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="section">
+    <h2 class="section-title">Experience</h2>
     <div class="timeline">
-      <div class="timeline-item">
-        <h3>TCS (2023 - Present)</h3>
-        <p>Developer | System Engineer</p>
-        <ul>
-          <li>Mainframe migration & enterprise applications.</li>
-          <li>Agile PI Planning, Scrum ceremonies.</li>
-        </ul>
+      <div class="tl-item glass">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h3>Tata Consultancy Services — Developer / System Engineer</h3>
+          <span class="meta">May 2023 — Present • Chennai, IN</span>
+          <ul>
+            <li>End-to-end SDLC: requirements, design, coding, testing, deployment.</li>
+            <li>Mainframe migration planning & delivery; enterprise systems maintenance.</li>
+            <li>Agile PI planning, Scrum ceremonies, documentation & releases.</li>
+          </ul>
+        </div>
       </div>
-      <div class="timeline-item">
-        <h3>Infosys Ltd (2021 - 2023)</h3>
-        <p>Senior Systems Associate</p>
-        <ul>
-          <li>Developed & maintained apps for RBS using COBOL, JCL, CICS, DB2.</li>
-          <li>Worked in global Agile teams.</li>
-        </ul>
+      <div class="tl-item glass">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h3>Infosys — Senior Systems Associate (Mainframes)</h3>
+          <span class="meta">Jun 2021 — May 2023 • Client: RBS</span>
+          <ul>
+            <li>COBOL / JCL / CICS / DB2 development for banking workloads.</li>
+            <li>SDLC across analysis, build, test, deploy with distributed teams.</li>
+            <li>Requirement gathering, stakeholder collaboration, issue resolution.</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Education -->
-  <section class="education reveal" id="education">
-    <h2>Education</h2>
-    <ul>
-      <li><b>MCA</b> – University of Mysore (Ongoing)</li>
-      <li><b>B.Sc (2016 - 2019)</b> – University of Madras</li>
-      <li><b>HSC</b> – St. Peters Hr. Sec. School, Chennai</li>
-      <li><b>SSLC</b> – St. Peters Hr. Sec. School, Chennai</li>
-    </ul>
-  </section>
-
-  <!-- Contact -->
-  <section class="contact reveal" id="contact">
-    <h2>Contact Me</h2>
-    <p>Let’s build something futuristic together 🚀</p>
-    <div class="contact-links">
-      <a href="mailto:vijaysai1999@gmail.com"><i data-feather="mail"></i></a>
-      <a href="https://github.com/" target="_blank"><i data-feather="github"></i></a>
-      <a href="https://linkedin.com/" target="_blank"><i data-feather="linkedin"></i></a>
-      <a href="tel:+918807373279"><i data-feather="phone"></i></a>
+  <!-- PROJECTS (Swiper 3D) -->
+  <section id="projects" class="section">
+    <h2 class="section-title">Projects</h2>
+    <div class="swiper mySwiper glass">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide proj-card" data-tilt>
+          <h3>Portfolio 3D Neon</h3>
+          <p>Static site with GSAP motion, starfield, and dark/light theme. (This site!)</p>
+          <div class="tags"><span>HTML</span><span>CSS</span><span>JS</span><span>GSAP</span></div>
+        </div>
+        <div class="swiper-slide proj-card" data-tilt>
+          <h3>Spring Boot REST</h3>
+          <p>Secure REST APIs with Spring Security, JPA, Docker-ready.</p>
+          <div class="tags"><span>Java</span><span>Spring Boot</span><span>REST</span></div>
+        </div>
+        <div class="swiper-slide proj-card" data-tilt>
+          <h3>Mainframe Migration</h3>
+          <p>Planned & validated migration of legacy jobs to modern runtime.</p>
+          <div class="tags"><span>COBOL</span><span>JCL</span><span>DB2</span></div>
+        </div>
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
     </div>
   </section>
 
-  <footer>
-    <p>© 2025 Vijay Sai Kishore Babu | Designed for the Future ✨</p>
+  <!-- EDUCATION -->
+  <section id="education" class="section">
+    <h2 class="section-title">Education</h2>
+    <div class="grid two">
+      <div class="card glass" data-tilt>
+        <h3>MCA (Ongoing)</h3>
+        <p>University of Mysore — Online Program</p>
+      </div>
+      <div class="card glass" data-tilt>
+        <h3>B.Sc (2016–2019)</h3>
+        <p>University of Madras, India</p>
+      </div>
+      <div class="card glass" data-tilt>
+        <h3>HSC</h3>
+        <p>St. Peters Higher Secondary School, Chennai</p>
+      </div>
+      <div class="card glass" data-tilt>
+        <h3>SSLC</h3>
+        <p>St. Peters Higher Secondary School, Chennai</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <h2 class="section-title">Contact</h2>
+    <div class="contact-grid">
+      <a class="contact-card glass magnet" href="mailto:vijaysai1999@gmail.com">
+        <i data-feather="mail"></i> vijaysai1999@gmail.com
+      </a>
+      <a class="contact-card glass magnet" href="tel:+918807373279">
+        <i data-feather="phone"></i> +91 8807373279
+      </a>
+      <a class="contact-card glass magnet" href="https://github.com/" target="_blank">
+        <i data-feather="github"></i> github.com/yourgithub
+      </a>
+      <a class="contact-card glass magnet" href="https://linkedin.com/" target="_blank">
+        <i data-feather="linkedin"></i> linkedin.com/in/yourlinkedin
+      </a>
+    </div>
+  </section>
+
+  <footer class="footer glass">
+    <p>© 2025 Vijay Sai Kishore Babu • Built with ❤️, html, css, js</p>
   </footer>
 
-  <script src="app.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script>feather.replace();</script>
+  <!-- Libraries -->
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <!-- App -->
+  <script defer src="app.js"></script>
 </body>
 </html>
