@@ -1083,7 +1083,8 @@ body {
 }
 
 .toggle-thumb.dark {
-  left: 32px;
+  /* remove left:32px; */
+  transform: translateX(30px);  /* 👈 smooth relative move */
   background: var(--gradient-sunset);
   box-shadow: var(--glow-pink);
 }
@@ -1094,21 +1095,11 @@ body {
   transition: all var(--transition-fast);
 }
 
-.sun-icon {
-  opacity: 1;
-}
+.sun-icon { opacity: 1; }
+.moon-icon { opacity: 0; }
 
-.moon-icon {
-  opacity: 0;
-}
-
-.toggle-thumb.dark .sun-icon {
-  opacity: 0;
-}
-
-.toggle-thumb.dark .moon-icon {
-  opacity: 1;
-}
+.toggle-thumb.dark .sun-icon { opacity: 0; }
+.toggle-thumb.dark .moon-icon { opacity: 1; }
 
 /* Enhanced Navigation */
 .nav {
