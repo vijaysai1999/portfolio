@@ -8,7 +8,7 @@ let currentTheme = 'dark';
 
 // Enhanced Typing Animation Data
 const typingTexts = [
-    'MAINFRAME EXPERT', 
+    'MAINFRAME DEVELOPER', 
     'JAVA DEVELOPER',
     'SPRINGBOOT DEVELOPER',
     'FULL-STACK DEVELOPER'
