@@ -3,12 +3,12 @@ let particles = [];
 let mouse = { x: 0, y: 0 };
 let animationId;
 let isLoaded = false;
-let currentTheme = 'dark'; // Default theme
 
 // Typing animation data
 const typingTexts = [
     'MAINFRAME DEVELOPER', 
     'JAVA DEVELOPER',
+    'SPRINGBOOT DEVELOPER',
     'FULL-STACK DEVELOPER'
 ];
 let currentTextIndex = 0;
@@ -32,7 +32,6 @@ function initializeApp() {
     loadingScreen.classList.add('hidden');
     
     // Initialize all components
-    initThemeToggle();
     initParticles();
     initCustomCursor();
     initNavigation();
@@ -43,85 +42,6 @@ function initializeApp() {
     initInteractiveEffects();
     
     isLoaded = true;
-}
-
-// Theme Toggle Functionality
-function initThemeToggle() {
-    const themeToggle = document.getElementById('themeToggle');
-    const root = document.documentElement;
-    
-    // Load saved theme or default to dark
-    const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
-    currentTheme = savedTheme;
-    
-    // Apply saved theme
-    if (savedTheme === 'light') {
-        root.setAttribute('data-theme', 'light');
-        themeToggle.classList.add('active');
-    } else {
-        root.setAttribute('data-theme', 'dark');
-        themeToggle.classList.remove('active');
-    }
-    
-    // Theme toggle event listener
-    if (themeToggle) {
-        themeToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Prevent any layout shifts by ensuring fixed positioning
-            this.style.position = 'fixed';
-            this.style.top = '20px';
-            this.style.right = '20px';
-            this.style.zIndex = '9999';
-            this.style.width = '60px';
-            this.style.height = '32px';
-            
-            if (currentTheme === 'dark') {
-                currentTheme = 'light';
-                root.setAttribute('data-theme', 'light');
-                this.classList.add('active');
-            } else {
-                currentTheme = 'dark';
-                root.setAttribute('data-theme', 'dark');
-                this.classList.remove('active');
-            }
-            
-            // Save theme preference
-            localStorage.setItem('portfolio-theme', currentTheme);
-            
-            // Update particles colors based on theme
-            updateParticlesForTheme();
-        });
-        
-        // Ensure button maintains fixed position on any interaction
-        themeToggle.addEventListener('mouseenter', function() {
-            this.style.position = 'fixed';
-            this.style.top = '20px';
-            this.style.right = '20px';
-            this.style.transform = 'none';
-        });
-        
-        themeToggle.addEventListener('mouseleave', function() {
-            this.style.position = 'fixed';
-            this.style.top = '20px';
-            this.style.right = '20px';
-            this.style.transform = 'none';
-        });
-    }
-}
-
-// Update particle colors based on theme
-function updateParticlesForTheme() {
-    if (currentTheme === 'light') {
-        particles.forEach(particle => {
-            particle.color = `hsl(${200 + Math.random() * 60}, 70%, 50%)`;
-        });
-    } else {
-        particles.forEach(particle => {
-            particle.color = `hsl(${180 + Math.random() * 60}, 100%, 70%)`;
-        });
-    }
 }
 
 // Particle System
@@ -146,9 +66,7 @@ function initParticles() {
             speedX: (Math.random() - 0.5) * 0.5,
             speedY: (Math.random() - 0.5) * 0.5,
             opacity: Math.random() * 0.5 + 0.2,
-            color: currentTheme === 'light' ? 
-                `hsl(${200 + Math.random() * 60}, 70%, 50%)` : 
-                `hsl(${180 + Math.random() * 60}, 100%, 70%)`
+            color: `hsl(${180 + Math.random() * 60}, 100%, 70%)`
         });
     }
     
@@ -197,10 +115,7 @@ function initParticles() {
                         ctx.beginPath();
                         ctx.moveTo(particle.x, particle.y);
                         ctx.lineTo(otherParticle.x, otherParticle.y);
-                        const connectionColor = currentTheme === 'light' ? 
-                            `rgba(0, 123, 255, ${0.2 * (1 - distance2 / 80)})` : 
-                            `rgba(0, 212, 255, ${0.2 * (1 - distance2 / 80)})`;
-                        ctx.strokeStyle = connectionColor;
+                        ctx.strokeStyle = `rgba(0, 212, 255, ${0.2 * (1 - distance2 / 80)})`;
                         ctx.lineWidth = 1;
                         ctx.stroke();
                     }
@@ -248,7 +163,7 @@ function initCustomCursor() {
     updateCursor();
     
     // Cursor interactions
-    const interactiveElements = document.querySelectorAll('a, button, .nav-link, .project-card, .skill-item, .theme-toggle');
+    const interactiveElements = document.querySelectorAll('a, button, .nav-link, .project-card, .skill-item');
     
     interactiveElements.forEach(el => {
         el.addEventListener('mouseenter', () => {
@@ -845,10 +760,7 @@ document.addEventListener('visibilitychange', () => {
                                 ctx.beginPath();
                                 ctx.moveTo(particle.x, particle.y);
                                 ctx.lineTo(otherParticle.x, otherParticle.y);
-                                const connectionColor = currentTheme === 'light' ? 
-                                    `rgba(0, 123, 255, ${0.2 * (1 - distance / 80)})` : 
-                                    `rgba(0, 212, 255, ${0.2 * (1 - distance / 80)})`;
-                                ctx.strokeStyle = connectionColor;
+                                ctx.strokeStyle = `rgba(0, 212, 255, ${0.2 * (1 - distance / 80)})`;
                                 ctx.lineWidth = 1;
                                 ctx.stroke();
                             }
