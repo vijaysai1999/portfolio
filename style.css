@@ -1338,7 +1338,7 @@ body {
   font-family: var(--font-primary);
   font-size: clamp(3rem, 8vw, 6rem);
   font-weight: 900;
-   margin-top: 30px;
+  margin-top: 30px;
   margin-bottom: 20px;
   line-height: 1;
 }
