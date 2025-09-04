@@ -83,38 +83,47 @@ function initializeApp() {
 }
 
 // Enhanced Theme Toggle
+// Enhanced Theme Toggle (iOS style)
 function initThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
+    const toggleTrack = themeToggle?.querySelector('.toggle-track');
     const toggleThumb = themeToggle?.querySelector('.toggle-thumb');
     
-    if (!themeToggle || !toggleThumb) return;
+    if (!themeToggle || !toggleThumb || !toggleTrack) return;
+    
+    // Initialize state
+    if (currentTheme === 'dark') {
+        toggleThumb.classList.add('active');
+        toggleTrack.classList.add('active');
+    }
     
     themeToggle.addEventListener('click', () => {
         currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        // Apply theme with smooth transition
+
+        // Apply theme
         document.documentElement.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
         document.documentElement.setAttribute('data-theme', currentTheme);
-        
-        // Update toggle button
-        toggleThumb.classList.remove('dark', 'light');
-        toggleThumb.classList.add(currentTheme);
-        
-        // Save theme preference
+
+        // Update toggle classes
+        toggleThumb.classList.toggle('active', currentTheme === 'dark');
+        toggleTrack.classList.toggle('active', currentTheme === 'dark');
+
+        // Save theme
         localStorage.setItem('portfolio-theme', currentTheme);
-        
-        // Update particles colors
+
+        // Update particles
         updateParticleColors();
-        
-        // Reset transition after animation
+
+        // Reset transition
         setTimeout(() => {
             document.documentElement.style.transition = '';
         }, 600);
-        
-        // Add ripple effect to toggle
+
+        // Ripple effect
         createToggleRipple(themeToggle);
     });
 }
+
 
 function createToggleRipple(element) {
     const ripple = document.createElement('div');
