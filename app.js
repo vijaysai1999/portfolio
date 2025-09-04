@@ -144,8 +144,12 @@ function createToggleRipple(element) {
         z-index: 0;
     `;
     
-    element.style.position = 'relative';
-    element.appendChild(ripple);
+    // ✅ Apply relative position to the track, NOT the fixed container
+    const track = element.querySelector('.toggle-track');
+    if (track) {
+        track.style.position = 'relative';
+        track.appendChild(ripple);
+    }
     
     setTimeout(() => {
         ripple.remove();
