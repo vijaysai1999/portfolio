@@ -737,7 +737,7 @@ select.form-control {
     format('woff2');
 }
 
-/* END PERPLEXITY DESIGN SYSTEM */
+/* END DESIGN */
 /* Enhanced Color Palette and Theme System */
 :root {
   /* Light Theme Colors */
@@ -1053,7 +1053,7 @@ body {
   right: 20px;
   z-index: 1001;
   cursor: pointer;
-}
+} 
 
 .toggle-track {
   width: 60px;
