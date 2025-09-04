@@ -1053,7 +1053,7 @@ body {
   right: 20px;
   z-index: 1001;
   cursor: pointer;
-} 
+}
 
 .toggle-track {
   width: 60px;
@@ -1061,53 +1061,56 @@ body {
   background: var(--surface-glass);
   backdrop-filter: blur(20px);
   border: 2px solid var(--neon-cyan);
-  border-radius: 15px;
+  border-radius: 30px; /* more rounded like iOS */
   position: relative;
-  transition: all var(--transition-smooth);
+  transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
   box-shadow: var(--glow-cyan);
 }
 
+/* Thumb */
 .toggle-thumb {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   background: var(--gradient-electric);
   border-radius: 50%;
   position: absolute;
-  top: 1px;
-  left: 2px;
-  transition: all var(--transition-bounce);
+  top: 2px;
+  left: 2px; /* stays here */
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: var(--glow-electric);
+
+  /* iOS smooth spring effect */
+  transition: transform 0.35s cubic-bezier(0.22, 1.61, 0.36, 1),
+              background 0.3s ease,
+              box-shadow 0.3s ease;
 }
 
+/* Dark mode position (slide right) */
 .toggle-thumb.dark {
-  left: 32px;
+  transform: translateX(30px); /* smooth slide */
   background: var(--gradient-sunset);
   box-shadow: var(--glow-pink);
 }
 
+/* Icons */
 .thumb-icon {
   font-size: 12px;
   position: absolute;
-  transition: all var(--transition-fast);
+  transition: opacity 0.25s ease;
 }
 
-.sun-icon {
-  opacity: 1;
-}
+.sun-icon { opacity: 1; }
+.moon-icon { opacity: 0; }
 
-.moon-icon {
-  opacity: 0;
-}
+.toggle-thumb.dark .sun-icon { opacity: 0; }
+.toggle-thumb.dark .moon-icon { opacity: 1; }
 
-.toggle-thumb.dark .sun-icon {
-  opacity: 0;
-}
-
-.toggle-thumb.dark .moon-icon {
-  opacity: 1;
+/* Optional: subtle background color change on toggle */
+.toggle-track.dark {
+  border-color: var(--neon-pink);
+  box-shadow: var(--glow-pink);
 }
 
 /* Enhanced Navigation */
