@@ -1061,13 +1061,12 @@ body {
   background: var(--surface-glass);
   backdrop-filter: blur(20px);
   border: 2px solid var(--neon-cyan);
-  border-radius: 30px; /* more rounded like iOS */
+  border-radius: 30px; /* iOS style */
   position: relative;
-  transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
   box-shadow: var(--glow-cyan);
+  transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Thumb */
 .toggle-thumb {
   width: 26px;
   height: 26px;
@@ -1075,26 +1074,25 @@ body {
   border-radius: 50%;
   position: absolute;
   top: 2px;
-  left: 2px; /* stays here */
+  left: 2px; /* 👈 always fixed */
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: var(--glow-electric);
 
-  /* iOS smooth spring effect */
+  /* Smooth iOS bounce */
   transition: transform 0.35s cubic-bezier(0.22, 1.61, 0.36, 1),
               background 0.3s ease,
               box-shadow 0.3s ease;
 }
 
-/* Dark mode position (slide right) */
+/* Dark mode: slide only with transform */
 .toggle-thumb.dark {
-  transform: translateX(30px); /* smooth slide */
+  transform: translateX(30px); /* 👈 ONLY transform, no left */
   background: var(--gradient-sunset);
   box-shadow: var(--glow-pink);
 }
 
-/* Icons */
 .thumb-icon {
   font-size: 12px;
   position: absolute;
@@ -1107,11 +1105,11 @@ body {
 .toggle-thumb.dark .sun-icon { opacity: 0; }
 .toggle-thumb.dark .moon-icon { opacity: 1; }
 
-/* Optional: subtle background color change on toggle */
 .toggle-track.dark {
   border-color: var(--neon-pink);
   box-shadow: var(--glow-pink);
 }
+
 
 /* Enhanced Navigation */
 .nav {
