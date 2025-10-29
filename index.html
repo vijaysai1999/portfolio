@@ -1,653 +1,1160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vijay Sai Kishore Babu - Interactive Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vijay Sai Kishore Babu - Portfolio</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --bg-dark: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.15);
+      --text-primary: #ffffff;
+      --text-secondary: #cbd5e1;
+      --accent-1: #8b5cf6;
+      --accent-2: #06b6d4;
+      --accent-3: #ec4899;
+      --accent-4: #10b981;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* ============ ANIMATED BACKGROUND CANVAS ============ */
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    /* ============ NAVIGATION HEADER ============ */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+    
+    .navbar.scrolled {
+      padding: 15px 40px;
+      box-shadow: 0 10px 40px rgba(139, 92, 246, 0.3);
+    }
+    
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      cursor: pointer;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+    
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 5px 0;
+    }
+    
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text-primary);
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+    
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+    
+    .menu-toggle span {
+      width: 30px;
+      height: 3px;
+      background: var(--text-primary);
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+    
+    /* ============ WELCOME SCREEN ============ */
+    #welcomeScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      background: var(--bg-dark);
+      transition: opacity 0.8s ease;
+    }
+    
+    #welcomeScreen.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .canvas-wrapper {
+      position: relative;
+      margin-bottom: 50px;
+    }
+    
+    #barCanvas {
+      width: 600px;
+      height: 400px;
+      max-width: 90vw;
+      filter: drop-shadow(0 20px 60px rgba(139, 92, 246, 0.4));
+    }
+    
+    .welcome-text {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: fadeInUp 1s ease;
+    }
+    
+    .welcome-text h1 {
+      font-size: 56px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .welcome-text p {
+      font-size: 20px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+    
+    .welcome-buttons {
+      display: flex;
+      gap: 20px;
+      animation: fadeIn 1.5s ease;
+    }
+    
+    .glass-btn {
+      padding: 18px 45px;
+      font-size: 18px;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      color: var(--text-primary);
+      border: 2px solid var(--glass-border);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .glass-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      transform: translate(-50%, -50%);
+      transition: width 0.5s ease, height 0.5s ease;
+      z-index: -1;
+    }
+    
+    .glass-btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .glass-btn:hover {
+      border-color: var(--accent-1);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 40px rgba(139, 92, 246, 0.5);
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      border: none;
+    }
+    
+    /* ============ LOADING OVERLAY ============ */
+    #loadingOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: var(--bg-dark);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    
+    #loadingOverlay.active {
+      display: flex;
+    }
+    
+    .loading-text h2 {
+      font-size: 40px;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .progress-container {
+      width: 400px;
+      max-width: 80vw;
+      height: 12px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 2px solid var(--glass-border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3));
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
+    }
+    
+    .percentage {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    
+    /* ============ PORTFOLIO CONTENT ============ */
+    #portfolioContent {
+      display: none;
+      position: relative;
+      z-index: 1;
+    }
+    
+    #portfolioContent.active {
+      display: block;
+    }
+    
+    section {
+      min-height: 100vh;
+      padding: 120px 40px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    
+    /* ============ HERO SECTION ============ */
+    .hero-content {
+      text-align: center;
+    }
+    
+    .hero-content h1 {
+      font-size: 72px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeInDown 1s ease;
+    }
+    
+    .hero-content .subtitle {
+      font-size: 28px;
+      color: var(--text-secondary);
+      margin-bottom: 15px;
+      animation: fadeInUp 1.2s ease;
+    }
+    
+    .hero-content .location {
+      font-size: 20px;
+      color: var(--accent-2);
+      margin-bottom: 40px;
+      animation: fadeInUp 1.4s ease;
+    }
+    
+    /* ============ GLASSMORPHISM CARDS ============ */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 2px solid var(--glass-border);
+      border-radius: 30px;
+      padding: 40px;
+      margin-bottom: 30px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, 
+        transparent 30%, 
+        rgba(139, 92, 246, 0.1) 50%, 
+        transparent 70%);
+      transform: rotate(45deg);
+      transition: all 0.6s ease;
+    }
+    
+    .glass-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--accent-1);
+      box-shadow: 0 20px 60px rgba(139, 92, 246, 0.4);
+    }
+    
+    .glass-card:hover::before {
+      animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) rotate(45deg); }
+    }
+    
+    .section-title {
+      font-size: 56px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 60px;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      border-radius: 10px;
+    }
+    
+    /* ============ STATS GRID ============ */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .stat-card {
+      text-align: center;
+      padding: 40px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 2px solid var(--glass-border);
+      border-radius: 25px;
+      transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+      transform: scale(1.05);
+      border-color: var(--accent-1);
+      box-shadow: 0 15px 50px rgba(139, 92, 246, 0.4);
+    }
+    
+    .stat-card h3 {
+      font-size: 56px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    
+    .stat-card p {
+      font-size: 18px;
+      color: var(--text-secondary);
+    }
+    
+    /* ============ SKILL TAGS ============ */
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .skill-tag {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      border-radius: 30px;
+      font-weight: 600;
+      color: white;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .skill-tag:hover {
+      transform: scale(1.1);
+      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.6);
+    }
+    
+    /* ============ EXPERIENCE TIMELINE ============ */
+    .timeline {
+      position: relative;
+      padding-left: 50px;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 4px;
+      background: linear-gradient(180deg, var(--accent-1), var(--accent-2), var(--accent-3));
+      border-radius: 10px;
+    }
+    
+    .timeline-item {
+      position: relative;
+      margin-bottom: 50px;
+    }
+    
+    .timeline-marker {
+      position: absolute;
+      left: -59px;
+      top: 10px;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
+    }
+    
+    .timeline-content h3 {
+      font-size: 28px;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+    
+    .timeline-content .period {
+      color: var(--accent-2);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .timeline-content .role {
+      color: var(--text-secondary);
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+    
+    .timeline-content .description {
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+    
+    /* ============ CONTACT ============ */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 30px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 2px solid var(--glass-border);
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .contact-item:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-1);
+      box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
+    }
+    
+    .contact-item .icon {
+      font-size: 36px;
+    }
+    
+    .contact-item a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 18px;
+      transition: color 0.3s ease;
+    }
+    
+    .contact-item a:hover {
+      color: var(--accent-1);
+    }
+    
+    /* ============ ANIMATIONS ============ */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    /* ============ MOBILE RESPONSIVE ============ */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 15px 20px;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        right: -100%;
+        width: 250px;
+        height: calc(100vh - 70px);
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        padding: 30px;
+        transition: right 0.3s ease;
+        border-left: 1px solid var(--glass-border);
+      }
+      
+      .nav-links.active {
+        right: 0;
+      }
+      
+      .menu-toggle {
+        display: flex;
+      }
+      
+      #barCanvas {
+        width: 400px;
+        height: 300px;
+      }
+      
+      .welcome-text h1 {
+        font-size: 36px;
+      }
+      
+      .welcome-buttons {
+        flex-direction: column;
+      }
+      
+      .hero-content h1 {
+        font-size: 42px;
+      }
+      
+      .section-title {
+        font-size: 36px;
+      }
+      
+      section {
+        padding: 100px 20px 60px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Theme Toggle -->
-    <div class="theme-toggle-wrapper">
-        <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle theme">
-            <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18">
-                <circle cx="12" cy="12" r="4" fill="currentColor"/>
-                <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor"/>
-            </svg>
-        </button>
+  <!-- Animated Background Canvas -->
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- Navigation Header -->
+  <nav class="navbar">
+    <div class="logo">VSK</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
+  </nav>
 
-    <!-- Animated Character Container (appears on all pages) -->
-    <div class="character-widget" id="characterWidget">
-        <div class="character-bubble" id="characterBubble"></div>
-        <canvas id="characterCanvas" width="120" height="120"></canvas>
+  <!-- Welcome Screen -->
+  <div id="welcomeScreen">
+    <div class="canvas-wrapper">
+      <canvas id="barCanvas" width="600" height="400"></canvas>
     </div>
+    
+    <div class="welcome-text">
+      <h1>Welcome to My Portfolio</h1>
+      <p>Vijay Sai Kishore Babu</p>
+      <p>Software Developer | Mainframe &amp; Java Specialist</p>
+    </div>
+    
+    <div class="welcome-buttons">
+      <button class="glass-btn btn-primary" onclick="enterPortfolio()">Enter Portfolio</button>
+      <button class="glass-btn" onclick="alert('Thanks for visiting! Check out my portfolio!')">Exit</button>
+    </div>
+  </div>
 
-    <!-- Page: Welcome/Index -->
-    <section class="page page-welcome active" id="pageWelcome">
-        <div id="particles-welcome"></div>
-        <div class="welcome-content">
-            <div class="character-showcase">
-                <div class="character-glow"></div>
-                <canvas id="mainCharacter" width="600" height="600"></canvas>
-            </div>
-            <h1 class="welcome-title">Welcome to My Universe</h1>
-            <p class="welcome-subtitle">Vijay Sai Kishore Babu</p>
-            <p class="welcome-role">Software Developer | Mainframe &amp; Java Specialist</p>
-            <div class="button-group">
-                <button class="btn btn-primary" data-page="home">
-                    <span>Enter Portfolio</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </button>
-                <button class="btn btn-secondary" data-page="exit">
-                    <span>Exit</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 6L6 18M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay">
+    <div class="loading-text">
+      <h2>Loading Portfolio</h2>
+      <div class="progress-container">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <p class="percentage" id="percentage">0%</p>
+    </div>
+  </div>
+
+  <!-- Portfolio Content -->
+  <div id="portfolioContent">
+    <!-- Hero Section -->
+    <section id="home">
+      <div class="hero-content">
+        <h1>Vijay Sai Kishore Babu</h1>
+        <p class="subtitle">Software Developer | Mainframe &amp; Java Specialist</p>
+        <p class="location">📍 Chennai, India</p>
+      </div>
     </section>
 
-    <!-- Page: Loading -->
-    <section class="page page-loading" id="pageLoading">
-        <div class="loading-content">
-            <div class="loading-character">
-                <canvas id="loadingCharacter" width="400" height="400"></canvas>
-            </div>
-            <h2 class="loading-title">Preparing Your Experience</h2>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <p class="progress-text" id="progressText">0%</p>
+    <!-- About Section -->
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">About Me</h2>
+        <div class="glass-card">
+          <p style="font-size: 20px; line-height: 1.8; color: var(--text-secondary); text-align: center;">
+            Motivated and results-driven software professional with expertise in both Mainframe 
+            technologies and Java development. Adept at delivering impactful, scalable solutions 
+            across legacy and modern platforms. Passionate about continuous learning and innovation.
+          </p>
         </div>
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>4+</h3>
+            <p>Years Experience</p>
+          </div>
+          <div class="stat-card">
+            <h3>2</h3>
+            <p>Major Companies</p>
+          </div>
+          <div class="stat-card">
+            <h3>15+</h3>
+            <p>Technologies</p>
+          </div>
+          <div class="stat-card">
+            <h3>10+</h3>
+            <p>Projects Completed</p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Page: Exit (Funny) -->
-    <section class="page page-exit" id="pageExit">
-        <div class="exit-content">
-            <div class="exit-character-sad">
-                <canvas id="exitCharacter" width="400" height="400"></canvas>
-                <div class="tears" id="tearsContainer">
-                    <div class="tear"></div>
-                    <div class="tear"></div>
-                </div>
+    <!-- Experience Section -->
+    <section id="experience">
+      <div class="container">
+        <h2 class="section-title">Experience</h2>
+        
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="glass-card timeline-content">
+              <h3>Tata Consultancy Services (TCS)</h3>
+              <p class="period">May 2023 - Present</p>
+              <p class="role">Developer | System Engineer</p>
+              <p class="description">
+                Working on mainframe development and migration projects with expertise in SDLC. 
+                Outstanding technical and analytical skills with knowledge of JCL, COBOL, CICS, DB2 and IBM Mainframe Systems.
+                Involved in migration process from mainframe to modern systems.
+              </p>
             </div>
-            <h1 class="exit-title">Wait! Don't Go Yet... 😢</h1>
-            <p class="exit-message">You just got here! Don't you want to see the amazing things I've built?</p>
-            <div class="exit-reasons">
-                <div class="reason">✨ Cool projects</div>
-                <div class="reason">💼 Professional experience</div>
-                <div class="reason">🎨 Beautiful design</div>
-                <div class="reason">🚀 Impressive skills</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="glass-card timeline-content">
+              <h3>Infosys Ltd</h3>
+              <p class="period">June 2021 - May 2023</p>
+              <p class="role">Software Developer (Mainframes) | Senior Systems Associate</p>
+              <p class="description">
+                Worked on Royal Bank of Scotland projects using SAFe Agile framework. 
+                Experience in all facets of Software Development Life Cycle (SDLC) with mainframe technologies.
+                Strong focus on gathering and documenting requirements.
+              </p>
             </div>
-            <div class="button-group">
-                <button class="btn btn-primary" data-page="home">
-                    <span>Okay, Show Me!</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </button>
-                <button class="btn btn-ghost" id="reallyLeaveBtn">
-                    <span>I Really Must Leave</span>
-                </button>
-            </div>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- Page: Home -->
-    <section class="page page-home" id="pageHome">
-        <nav class="navbar" id="navbar">
-            <div class="nav-container">
-                <div class="nav-logo">VSK</div>
-                <ul class="nav-menu" id="navMenu">
-                    <li><a href="#pageHome" class="nav-link active" data-page="home">Home</a></li>
-                    <li><a href="#pageAbout" class="nav-link" data-page="about">About</a></li>
-                    <li><a href="#pageServices" class="nav-link" data-page="services">Services</a></li>
-                    <li><a href="#pagePortfolio" class="nav-link" data-page="portfolio">Portfolio</a></li>
-                    <li><a href="#pageContact" class="nav-link" data-page="contact">Contact</a></li>
-                </ul>
-                <button class="hamburger" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </nav>
-        <div class="home-hero">
-            <div id="particles-home"></div>
-            <div class="hero-content">
-                <h1 class="hero-name">VIJAY SAI KISHORE BABU</h1>
-                <p class="hero-title">Software Developer</p>
-                <p class="hero-subtitle">Mainframe &amp; Java Specialist | 4+ Years Experience</p>
-                <div class="hero-stats">
-                    <div class="stat-card">
-                        <div class="stat-number">4+</div>
-                        <div class="stat-label">Years</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">2</div>
-                        <div class="stat-label">Companies</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">10+</div>
-                        <div class="stat-label">Technologies</div>
-                    </div>
-                </div>
-                <div class="hero-cta">
-                    <button class="btn btn-primary" data-page="contact">Get In Touch</button>
-                    <button class="btn btn-secondary" data-page="portfolio">View Projects</button>
-                </div>
-                <div class="scroll-indicator">
-                    <span>Scroll to explore</span>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 5v14M5 12l7 7 7-7"/>
-                    </svg>
-                </div>
-            </div>
+    <!-- Skills Section -->
+    <section id="skills">
+      <div class="container">
+        <h2 class="section-title">Technical Skills</h2>
+        
+        <div class="glass-card">
+          <h3 style="font-size: 28px; margin-bottom: 25px; color: var(--accent-1);">Primary Skills</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Core Java</span>
+            <span class="skill-tag">Spring Framework</span>
+            <span class="skill-tag">COBOL</span>
+            <span class="skill-tag">JCL</span>
+            <span class="skill-tag">CICS</span>
+            <span class="skill-tag">DB2</span>
+            <span class="skill-tag">VSAM</span>
+          </div>
         </div>
-
-        <!-- Skills Section -->
-        <section class="home-section skills-section" id="skillsSection">
-            <div class="section-container">
-                <h2 class="section-heading">Technical Expertise</h2>
-                <p class="section-description">Specialized in both legacy and modern technologies</p>
-                <div class="skills-grid-home">
-                    <div class="skill-card-home" style="background: var(--color-bg-1);">
-                        <div class="skill-icon">💻</div>
-                        <h3>Mainframe Technologies</h3>
-                        <div class="skill-list">
-                            <span>COBOL</span>
-                            <span>JCL</span>
-                            <span>CICS</span>
-                            <span>DB2</span>
-                            <span>VSAM</span>
-                        </div>
-                    </div>
-                    <div class="skill-card-home" style="background: var(--color-bg-2);">
-                        <div class="skill-icon">☕</div>
-                        <h3>Java Ecosystem</h3>
-                        <div class="skill-list">
-                            <span>Core Java</span>
-                            <span>Spring Boot</span>
-                            <span>Spring MVC</span>
-                            <span>RESTful APIs</span>
-                        </div>
-                    </div>
-                    <div class="skill-card-home" style="background: var(--color-bg-3);">
-                        <div class="skill-icon">☁️</div>
-                        <h3>Cloud Platforms</h3>
-                        <div class="skill-list">
-                            <span>Azure (AZ-900)</span>
-                            <span>AWS Certified</span>
-                            <span>Cloud Migration</span>
-                        </div>
-                    </div>
-                    <div class="skill-card-home" style="background: var(--color-bg-4);">
-                        <div class="skill-icon">🗄️</div>
-                        <h3>Databases</h3>
-                        <div class="skill-list">
-                            <span>DB2</span>
-                            <span>MongoDB</span>
-                            <span>MySQL</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Experience Section -->
-        <section class="home-section experience-section" id="experienceSection">
-            <div class="section-container">
-                <h2 class="section-heading">Professional Journey</h2>
-                <p class="section-description">4+ years delivering impactful solutions</p>
-                <div class="experience-cards">
-                    <div class="exp-card">
-                        <div class="exp-header">
-                            <div class="exp-company">Tata Consultancy Services</div>
-                            <div class="exp-badge current">Current</div>
-                        </div>
-                        <div class="exp-role">System Engineer - Developer</div>
-                        <div class="exp-period">May 2023 - Present • Chennai, India</div>
-                        <ul class="exp-highlights">
-                            <li>Leading mainframe to modern system migrations</li>
-                            <li>Expertise in SDLC across legacy and modern platforms</li>
-                            <li>Code testing and deployment optimization</li>
-                        </ul>
-                    </div>
-                    <div class="exp-card">
-                        <div class="exp-header">
-                            <div class="exp-company">Infosys Ltd</div>
-                            <div class="exp-badge">Previous</div>
-                        </div>
-                        <div class="exp-role">Senior Systems Associate</div>
-                        <div class="exp-period">June 2021 - May 2023 • Chennai, India</div>
-                        <div class="exp-client">Client: Royal Bank of Scotland</div>
-                        <ul class="exp-highlights">
-                            <li>Worked in SAFe Agile framework</li>
-                            <li>Enhanced banking applications</li>
-                            <li>Cross-functional team collaboration</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="home-section cta-section" id="ctaSection">
-            <div class="section-container">
-                <h2 class="cta-heading">Let's Build Something Amazing</h2>
-                <p class="cta-description">Ready to discuss your next project?</p>
-                <div class="cta-buttons">
-                    <button class="btn btn-primary" data-page="contact">Get In Touch</button>
-                    <button class="btn btn-secondary" data-page="about">Learn More About Me</button>
-                </div>
-            </div>
-        </section>
+        
+        <div class="glass-card">
+          <h3 style="font-size: 28px; margin-bottom: 25px; color: var(--accent-2);">Frameworks &amp; Tools</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Spring Boot</span>
+            <span class="skill-tag">Spring MVC</span>
+            <span class="skill-tag">RESTful APIs</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">Jenkins</span>
+            <span class="skill-tag">Maven</span>
+            <span class="skill-tag">VS Code</span>
+          </div>
+        </div>
+        
+        <div class="glass-card">
+          <h3 style="font-size: 28px; margin-bottom: 25px; color: var(--accent-3);">Cloud &amp; Certifications</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Microsoft Azure (AZ-900)</span>
+            <span class="skill-tag">AWS Cloud Practitioner</span>
+            <span class="skill-tag">MongoDB</span>
+            <span class="skill-tag">MySQL</span>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Page: About -->
-    <section class="page page-about" id="pageAbout">
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="nav-logo">VSK</div>
-                <ul class="nav-menu">
-                    <li><a href="#pageHome" class="nav-link" data-page="home">Home</a></li>
-                    <li><a href="#pageAbout" class="nav-link active" data-page="about">About</a></li>
-                    <li><a href="#pageServices" class="nav-link" data-page="services">Services</a></li>
-                    <li><a href="#pagePortfolio" class="nav-link" data-page="portfolio">Portfolio</a></li>
-                    <li><a href="#pageContact" class="nav-link" data-page="contact">Contact</a></li>
-                </ul>
-                <button class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </nav>
-        <div class="about-container">
-            <div class="about-header">
-                <h1 class="page-title">About Me</h1>
-                <p class="page-subtitle">My Journey in Software Development</p>
-            </div>
-            <div class="about-grid">
-                <div class="about-card">
-                    <h2>Career Objective</h2>
-                    <p>Motivated and results-driven software professional with expertise in both Mainframe technologies and Java development. Adept at delivering impactful, scalable solutions across legacy and modern platforms. Passionate about continuous learning, embracing emerging technologies, and taking on new challenges to drive technical and professional growth.</p>
-                </div>
-                <div class="about-card">
-                    <h2>Personal Info</h2>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <span class="info-label">Location:</span>
-                            <span class="info-value">Chennai, India</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Email:</span>
-                            <span class="info-value">vijaysai1999@gmail.com</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Phone:</span>
-                            <span class="info-value">+91 8807373279</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Languages:</span>
-                            <span class="info-value">English, Telugu, Tamil</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="experience-section">
-                <h2 class="section-title">Work Experience</h2>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-badge current">Current</div>
-                        <div class="timeline-content">
-                            <h3>Developer - System Engineer</h3>
-                            <h4>Tata Consultancy Services (TCS)</h4>
-                            <p class="timeline-period">May 2023 - Present | Chennai, India</p>
-                            <ul>
-                                <li>Experience in all facets of Software Development Life Cycle (SDLC)</li>
-                                <li>Outstanding technical and analytical skills with JCL, COBOL, CICS, DB2</li>
-                                <li>Migration process expertise from mainframe to modern systems</li>
-                                <li>Testing and deployment of migrated code</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-badge">Previous</div>
-                        <div class="timeline-content">
-                            <h3>Software Developer (Mainframes)</h3>
-                            <h4>Infosys Ltd</h4>
-                            <p class="timeline-period">June 2021 - May 2023 | Chennai, India</p>
-                            <p class="timeline-client">Client: Royal Bank of Scotland</p>
-                            <ul>
-                                <li>Worked in SAFe Agile framework with PI Planning and Scrum ceremonies</li>
-                                <li>Outstanding technical and analytical skills with mainframe technologies</li>
-                                <li>Requirement gathering and documentation</li>
-                                <li>Strong collaboration with onsite/offshore teams</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="education-section">
-                <h2 class="section-title">Education</h2>
-                <div class="education-grid">
-                    <div class="education-card">
-                        <div class="edu-icon">🎓</div>
-                        <h3>Master of Computer Applications</h3>
-                        <p>University of Mysore</p>
-                        <span class="edu-badge">Pursuing</span>
-                    </div>
-                    <div class="education-card">
-                        <div class="edu-icon">📚</div>
-                        <h3>Bachelor of Science</h3>
-                        <p>University of Madras</p>
-                        <span class="edu-badge">2016-2019</span>
-                    </div>
-                    <div class="education-card">
-                        <div class="edu-icon">📖</div>
-                        <h3>Higher Secondary</h3>
-                        <p>St. Peters Higher Secondary School</p>
-                        <span class="edu-badge">2014-2016</span>
-                    </div>
-                </div>
-            </div>
+    <!-- Contact Section -->
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        
+        <div class="contact-grid">
+          <div class="contact-item">
+            <span class="icon">📧</span>
+            <a href="mailto:vijaysai1999@gmail.com">vijaysai1999@gmail.com</a>
+          </div>
+          
+          <div class="contact-item">
+            <span class="icon">📱</span>
+            <a href="tel:+918807373279">+91 8807373279</a>
+          </div>
+          
+          <div class="contact-item">
+            <span class="icon">💼</span>
+            <a href="https://github.com/vijaysai1999" target="_blank">GitHub Profile</a>
+          </div>
         </div>
+      </div>
     </section>
+  </div>
 
-    <!-- Page: Services -->
-    <section class="page page-services" id="pageServices">
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="nav-logo">VSK</div>
-                <ul class="nav-menu">
-                    <li><a href="#pageHome" class="nav-link" data-page="home">Home</a></li>
-                    <li><a href="#pageAbout" class="nav-link" data-page="about">About</a></li>
-                    <li><a href="#pageServices" class="nav-link active" data-page="services">Services</a></li>
-                    <li><a href="#pagePortfolio" class="nav-link" data-page="portfolio">Portfolio</a></li>
-                    <li><a href="#pageContact" class="nav-link" data-page="contact">Contact</a></li>
-                </ul>
-                <button class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </nav>
-        <div class="services-container">
-            <div class="services-header">
-                <h1 class="page-title">Services &amp; Expertise</h1>
-                <p class="page-subtitle">What I Bring to the Table</p>
-            </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">💻</div>
-                    <h3>Mainframe Development</h3>
-                    <p>Expert in COBOL, JCL, CICS, and DB2 development with 4+ years of hands-on experience in banking applications.</p>
-                    <ul class="service-features">
-                        <li>COBOL Programming</li>
-                        <li>JCL Scripting</li>
-                        <li>CICS Transactions</li>
-                        <li>DB2 Database</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">☕</div>
-                    <h3>Java Development</h3>
-                    <p>Full-stack Java development with Spring framework, RESTful APIs, and modern web technologies.</p>
-                    <ul class="service-features">
-                        <li>Spring Boot</li>
-                        <li>Spring MVC</li>
-                        <li>RESTful APIs</li>
-                        <li>Microservices</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🔄</div>
-                    <h3>System Migration</h3>
-                    <p>Legacy system migration and modernization from mainframe to cloud-based solutions.</p>
-                    <ul class="service-features">
-                        <li>Legacy to Modern</li>
-                        <li>Data Migration</li>
-                        <li>Testing &amp; QA</li>
-                        <li>Deployment</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🎯</div>
-                    <h3>Technical Consulting</h3>
-                    <p>BFSI domain expertise and technical consultation for banking and financial services.</p>
-                    <ul class="service-features">
-                        <li>BFSI Domain</li>
-                        <li>Agile Methodology</li>
-                        <li>Architecture Design</li>
-                        <li>Best Practices</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="skills-showcase">
-                <h2 class="section-title">Technical Skills</h2>
-                <div class="skills-container">
-                    <div class="skill-category">
-                        <h3>Primary Skills</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Core Java</span>
-                            <span class="skill-tag">Spring Framework</span>
-                            <span class="skill-tag">COBOL</span>
-                            <span class="skill-tag">JCL</span>
-                            <span class="skill-tag">CICS</span>
-                            <span class="skill-tag">DB2</span>
-                            <span class="skill-tag">VSAM</span>
-                        </div>
-                    </div>
-                    <div class="skill-category">
-                        <h3>Cloud Certifications</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag certified">Microsoft Azure (AZ-900)</span>
-                            <span class="skill-tag certified">AWS Cloud Practitioner</span>
-                        </div>
-                    </div>
-                    <div class="skill-category">
-                        <h3>Tools &amp; Technologies</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Git</span>
-                            <span class="skill-tag">Jenkins</span>
-                            <span class="skill-tag">Maven</span>
-                            <span class="skill-tag">Jira</span>
-                            <span class="skill-tag">IntelliJ IDEA</span>
-                            <span class="skill-tag">Eclipse</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Page: Portfolio -->
-    <section class="page page-portfolio" id="pagePortfolio">
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="nav-logo">VSK</div>
-                <ul class="nav-menu">
-                    <li><a href="#pageHome" class="nav-link" data-page="home">Home</a></li>
-                    <li><a href="#pageAbout" class="nav-link" data-page="about">About</a></li>
-                    <li><a href="#pageServices" class="nav-link" data-page="services">Services</a></li>
-                    <li><a href="#pagePortfolio" class="nav-link active" data-page="portfolio">Portfolio</a></li>
-                    <li><a href="#pageContact" class="nav-link" data-page="contact">Contact</a></li>
-                </ul>
-                <button class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </nav>
-        <div class="portfolio-container">
-            <div class="portfolio-header">
-                <h1 class="page-title">My Projects</h1>
-                <p class="page-subtitle">Showcasing My Work &amp; Achievements</p>
-            </div>
-            <div class="portfolio-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <div class="project-overlay">
-                            <span class="project-tag">Mainframe</span>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Mainframe Migration Project</h3>
-                        <p>Led migration of legacy COBOL applications to modern Java-based systems, ensuring data integrity and business continuity.</p>
-                        <div class="project-tech">
-                            <span>COBOL</span>
-                            <span>JCL</span>
-                            <span>DB2</span>
-                            <span>Java</span>
-                            <span>Spring Boot</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <div class="project-overlay">
-                            <span class="project-tag">Banking</span>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Banking Application Enhancement</h3>
-                        <p>Developed new features for Royal Bank of Scotland applications, improving transaction processing and user experience.</p>
-                        <div class="project-tech">
-                            <span>CICS</span>
-                            <span>DB2</span>
-                            <span>COBOL</span>
-                            <span>JCL</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <div class="project-overlay">
-                            <span class="project-tag">Web</span>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Interactive Portfolio Website</h3>
-                        <p>Personal portfolio showcasing technical skills with stunning animations and interactive character using GSAP.</p>
-                        <div class="project-tech">
-                            <span>HTML</span>
-                            <span>CSS</span>
-                            <span>JavaScript</span>
-                            <span>GSAP</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Page: Contact -->
-    <section class="page page-contact" id="pageContact">
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="nav-logo">VSK</div>
-                <ul class="nav-menu">
-                    <li><a href="#pageHome" class="nav-link" data-page="home">Home</a></li>
-                    <li><a href="#pageAbout" class="nav-link" data-page="about">About</a></li>
-                    <li><a href="#pageServices" class="nav-link" data-page="services">Services</a></li>
-                    <li><a href="#pagePortfolio" class="nav-link" data-page="portfolio">Portfolio</a></li>
-                    <li><a href="#pageContact" class="nav-link active" data-page="contact">Contact</a></li>
-                </ul>
-                <button class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </nav>
-        <div class="contact-container">
-            <div class="contact-header">
-                <h1 class="page-title">Get In Touch</h1>
-                <p class="page-subtitle">Let's Build Something Amazing Together</p>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-card">
-                        <div class="contact-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                <polyline points="22,6 12,13 2,6"/>
-                            </svg>
-                        </div>
-                        <h3>Email</h3>
-                        <a href="mailto:vijaysai1999@gmail.com" target="_blank">vijaysai1999@gmail.com</a>
-                    </div>
-                    <div class="contact-card">
-                        <div class="contact-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                            </svg>
-                        </div>
-                        <h3>Phone</h3>
-                        <a href="tel:+918807373279" target="_blank">+91 8807373279</a>
-                    </div>
-                    <div class="contact-card">
-                        <div class="contact-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                <circle cx="12" cy="10" r="3"/>
-                            </svg>
-                        </div>
-                        <h3>Location</h3>
-                        <p>Chennai, India</p>
-                    </div>
-                </div>
-                <div class="contact-form-wrapper">
-                    <form class="contact-form" id="contactForm">
-                        <div class="form-group">
-                            <label>Your Name</label>
-                            <input type="text" placeholder="John Doe" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Your Email</label>
-                            <input type="email" placeholder="john@example.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Subject</label>
-                            <input type="text" placeholder="Project Inquiry" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Message</label>
-                            <textarea rows="5" placeholder="Tell me about your project..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-full">
-                            <span>Send Message</span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="22" y1="2" x2="11" y2="13"/>
-                                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-                            </svg>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script src="theme.js"></script>
-    <script src="navigation.js"></script>
-    <script src="character.js"></script>
-    <script src="loading.js"></script>
-    <script src="app.js"></script>
+  <script>
+    // ============ ANIMATED BACKGROUND ============
+    const bgCanvas = document.getElementById('bgCanvas');
+    const bgCtx = bgCanvas.getContext('2d');
+    bgCanvas.width = window.innerWidth;
+    bgCanvas.height = window.innerHeight;
+    
+    let mouseX = bgCanvas.width / 2;
+    let mouseY = bgCanvas.height / 2;
+    
+    const particles = [];
+    const particleCount = 80;
+    
+    class Particle {
+      constructor() {
+        this.x = Math.random() * bgCanvas.width;
+        this.y = Math.random() * bgCanvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = Math.random() * 0.5 - 0.25;
+        this.speedY = Math.random() * 0.5 - 0.25;
+      }
+      
+      update() {
+        const dx = mouseX - this.x;
+        const dy = mouseY - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < 200) {
+          this.x += dx * 0.01;
+          this.y += dy * 0.01;
+        }
+        
+        this.x += this.speedX;
+        this.y += this.speedY;
+        
+        if (this.x < 0 || this.x > bgCanvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > bgCanvas.height) this.speedY *= -1;
+      }
+      
+      draw() {
+        bgCtx.fillStyle = 'rgba(139, 92, 246, 0.6)';
+        bgCtx.beginPath();
+        bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        bgCtx.fill();
+      }
+    }
+    
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+    
+    function animateBackground() {
+      bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+      
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+      
+      particles.forEach((p1, i) => {
+        particles.slice(i + 1).forEach(p2 => {
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < 150) {
+            bgCtx.strokeStyle = `rgba(139, 92, 246, ${1 - distance / 150})`;
+            bgCtx.lineWidth = 1;
+            bgCtx.beginPath();
+            bgCtx.moveTo(p1.x, p1.y);
+            bgCtx.lineTo(p2.x, p2.y);
+            bgCtx.stroke();
+          }
+        });
+      });
+      
+      requestAnimationFrame(animateBackground);
+    }
+    
+    animateBackground();
+    
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+    
+    window.addEventListener('resize', () => {
+      bgCanvas.width = window.innerWidth;
+      bgCanvas.height = window.innerHeight;
+    });
+    
+    // ============ BAR CHARACTERS WITH MOUTH ============
+    class BarCharacter {
+      constructor(ctx, x, baseHeight, width, colors) {
+        this.ctx = ctx;
+        this.x = x;
+        this.baseHeight = baseHeight;
+        this.height = baseHeight;
+        this.width = width;
+        this.colors = colors;
+        this.targetHeight = baseHeight;
+        this.mouseX = 0;
+        this.mouseY = 0;
+        this.emotion = 'neutral';
+        
+        this.eyeLeftX = x + width * 0.3;
+        this.eyeRightX = x + width * 0.7;
+        this.eyeY = 100;
+        this.pupilOffsetX = 0;
+        this.pupilOffsetY = 0;
+        
+        this.mouthY = 160;
+        this.mouthCurve = 0;
+      }
+      
+      update() {
+        this.height += (this.targetHeight - this.height) * 0.1;
+        this.targetHeight = this.baseHeight + Math.sin(Date.now() * 0.001 + this.x * 0.01) * 15;
+      }
+      
+      trackMouse(mx, my) {
+        this.mouseX = mx;
+        this.mouseY = my;
+        
+        const dx = mx - this.x - this.width / 2;
+        const dy = my - this.eyeY;
+        const angle = Math.atan2(dy, dx);
+        const distance = Math.min(Math.sqrt(dx * dx + dy * dy) / 50, 10);
+        
+        this.pupilOffsetX = Math.cos(angle) * distance;
+        this.pupilOffsetY = Math.sin(angle) * distance;
+      }
+      
+      setEmotion(emotion) {
+        this.emotion = emotion;
+        if (emotion === 'happy') {
+          this.mouthCurve = 15;
+        } else if (emotion === 'sad') {
+          this.mouthCurve = -15;
+        } else {
+          this.mouthCurve = 0;
+        }
+      }
+      
+      draw() {
+        const ctx = this.ctx;
+        const canvasHeight = ctx.canvas.height;
+        const y = canvasHeight - this.height;
+        
+        const gradient = ctx.createLinearGradient(this.x, y, this.x, canvasHeight);
+        gradient.addColorStop(0, this.colors[0]);
+        gradient.addColorStop(1, this.colors[1]);
+        
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.roundRect(this.x, y, this.width, this.height, [25, 25, 0, 0]);
+        ctx.fill();
+        
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = this.colors[0];
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        
+        ctx.fillStyle = 'white';
+        ctx.beginPath();
+        ctx.ellipse(this.eyeLeftX, this.eyeY, 18, 22, 0, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.beginPath();
+        ctx.ellipse(this.eyeRightX, this.eyeY, 18, 22, 0, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.fillStyle = 'black';
+        ctx.beginPath();
+        ctx.arc(this.eyeLeftX + this.pupilOffsetX, this.eyeY + this.pupilOffsetY, 8, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.beginPath();
+        ctx.arc(this.eyeRightX + this.pupilOffsetX, this.eyeY + this.pupilOffsetY, 8, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(this.x + this.width * 0.25, this.mouthY);
+        ctx.quadraticCurveTo(
+          this.x + this.width * 0.5, 
+          this.mouthY + this.mouthCurve,
+          this.x + this.width * 0.75, 
+          this.mouthY
+        );
+        ctx.stroke();
+      }
+    }
+    
+    const barCanvas = document.getElementById('barCanvas');
+    const barCtx = barCanvas.getContext('2d');
+    
+    const barWidth = 80;
+    const spacing = 20;
+    const startX = (barCanvas.width - (barWidth * 4 + spacing * 3)) / 2;
+    
+    const bars = [
+      new BarCharacter(barCtx, startX, 220, barWidth, ['#8b5cf6', '#6d28d9']),
+      new BarCharacter(barCtx, startX + barWidth + spacing, 280, barWidth, ['#06b6d4', '#0891b2']),
+      new BarCharacter(barCtx, startX + (barWidth + spacing) * 2, 250, barWidth, ['#ec4899', '#db2777']),
+      new BarCharacter(barCtx, startX + (barWidth + spacing) * 3, 300, barWidth, ['#10b981', '#059669'])
+    ];
+    
+    function drawBase() {
+      const baseY = barCanvas.height - 10;
+      const baseX = startX - 10;
+      const baseWidth = barWidth * 4 + spacing * 3 + 20;
+      
+      const gradient = barCtx.createLinearGradient(baseX, baseY - 20, baseX, baseY);
+      gradient.addColorStop(0, 'rgba(139, 92, 246, 0.5)');
+      gradient.addColorStop(1, 'rgba(139, 92, 246, 0.1)');
+      
+      barCtx.fillStyle = gradient;
+      barCtx.fillRect(baseX, baseY - 20, baseWidth, 30);
+    }
+    
+    function animateBars() {
+      barCtx.clearRect(0, 0, barCanvas.width, barCanvas.height);
+      
+      drawBase();
+      
+      bars.forEach(bar => {
+        bar.update();
+        bar.draw();
+      });
+      
+      requestAnimationFrame(animateBars);
+    }
+    
+    animateBars();
+    
+    barCanvas.addEventListener('mousemove', (e) => {
+      const rect = barCanvas.getBoundingClientRect();
+      const mx = (e.clientX - rect.left) * (barCanvas.width / rect.width);
+      const my = (e.clientY - rect.top) * (barCanvas.height / rect.height);
+      bars.forEach(bar => bar.trackMouse(mx, my));
+    });
+    
+    const enterBtn = document.querySelector('.btn-primary');
+    enterBtn.addEventListener('mouseenter', () => {
+      bars.forEach(bar => bar.setEmotion('happy'));
+    });
+    enterBtn.addEventListener('mouseleave', () => {
+      bars.forEach(bar => bar.setEmotion('neutral'));
+    });
+    
+    // ============ NAVIGATION ============
+    function enterPortfolio() {
+      document.getElementById('welcomeScreen').classList.add('hidden');
+      
+      const loading = document.getElementById('loadingOverlay');
+      loading.classList.add('active');
+      
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 3;
+        if (progress > 100) progress = 100;
+        
+        document.getElementById('progressFill').style.width = progress + '%';
+        document.getElementById('percentage').textContent = progress + '%';
+        
+        if (progress >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            loading.classList.remove('active');
+            document.getElementById('portfolioContent').classList.add('active');
+            window.scrollTo(0, 0);
+          }, 500);
+        }
+      }, 40);
+    }
+    
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
+    
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('navLinks').classList.remove('active');
+          
+          document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+        }
+      });
+    });
+    
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  </script>
 </body>
 </html>

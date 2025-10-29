@@ -11,6 +11,7 @@ class LoadingController {
   }
 
   startLoading(callback) {
+    console.log('Loading started');
     this.isLoading = true;
     this.callback = callback;
     this.currentProgress = 0;
@@ -23,6 +24,9 @@ class LoadingController {
     if (this.progressText) {
       this.progressText.textContent = '0%';
     }
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
 
     // Stunning character entrance animation
     if (this.loadingCanvas) {
@@ -135,10 +139,14 @@ class LoadingController {
   }
 
   completeLoading() {
+    console.log('Loading complete');
     this.isLoading = false;
 
     // Kill all loading animations
     gsap.killTweensOf(this.loadingCanvas);
+    
+    // Ensure scroll at top
+    window.scrollTo(0, 0);
 
     // Final STUNNING celebration animation
     if (this.loadingCanvas) {

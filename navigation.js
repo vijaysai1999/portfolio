@@ -16,37 +16,63 @@ class NavigationController {
   }
 
   setupButtonListeners() {
-    // All buttons with data-page attribute
+    // All buttons with data-page attribute - ENSURE THEY WORK
     const pageButtons = document.querySelectorAll('[data-page]');
+    console.log('Setting up', pageButtons.length, 'navigation buttons');
+    
     pageButtons.forEach(button => {
       button.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         const targetPage = button.getAttribute('data-page');
+        console.log('Button clicked for page:', targetPage);
         
         // Special handling for exit button
-        if (targetPage === 'exit') {
+        if (targetPage === 'exit' && this.currentPage === 'welcome') {
           this.navigateToExit();
-        } else if (targetPage === 'home' && this.currentPage === 'welcome') {
+        } else if (targetPage === 'home' && (this.currentPage === 'welcome' || this.currentPage === 'exit')) {
           this.navigateWithLoading('home');
-        } else if (targetPage === 'home' && this.currentPage === 'exit') {
-          this.navigateWithLoading('home');
+        } else if (targetPage === 'contact') {
+          this.navigateTo('contact');
+        } else if (targetPage === 'portfolio') {
+          this.navigateTo('portfolio');
         } else {
           this.navigateTo(targetPage);
         }
       });
     });
 
-    // Really leave button special handling
+    // Really leave button - go to apology page
     const reallyLeaveBtn = document.getElementById('reallyLeaveBtn');
     if (reallyLeaveBtn) {
-      reallyLeaveBtn.addEventListener('click', () => {
-        // Change text and navigate anyway
-        reallyLeaveBtn.innerHTML = '<span>Just Kidding! 😄</span>';
-        setTimeout(() => {
-          this.navigateWithLoading('home');
-        }, 1000);
+      reallyLeaveBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('Really leave button clicked - going to apology');
+        this.navigateToApology();
       });
     }
+
+    // Give another chance button
+    const giveChanceBtn = document.getElementById('giveChanceBtn');
+    if (giveChanceBtn) {
+      giveChanceBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('Give chance button clicked');
+        this.navigateWithLoading('home');
+      });
+    }
+
+    // Final leave button - still go to portfolio
+    const finalLeaveBtn = document.getElementById('finalLeaveBtn');
+    if (finalLeaveBtn) {
+      finalLeaveBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('Final leave button clicked - going to home anyway');
+        this.navigateWithLoading('home');
+      });
+    }
+    
+    console.log('✓ Navigation buttons setup complete');
   }
 
   setupNavLinks() {
@@ -92,11 +118,19 @@ class NavigationController {
     const currentPageEl = document.getElementById(`page${this.capitalize(this.currentPage)}`);
     const targetPageEl = document.getElementById(`page${this.capitalize(pageName)}`);
 
-    if (!targetPageEl) {
-      console.error(`Page ${pageName} not found`);
+    if (!currentPageEl) {
+      console.error(`Current page ${this.currentPage} element not found`);
       this.isTransitioning = false;
       return;
     }
+
+    if (!targetPageEl) {
+      console.error(`Target page ${pageName} element not found`);
+      this.isTransitioning = false;
+      return;
+    }
+    
+    console.log('Transitioning from', this.currentPage, 'to', pageName);
 
     // Animate out current page
     gsap.to(currentPageEl, {
@@ -115,19 +149,22 @@ class NavigationController {
     const targetPageEl = document.getElementById(`page${this.capitalize(pageName)}`);
     if (!targetPageEl) return;
 
+    // CRITICAL: Scroll to top immediately
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    
+    // Prevent scroll restoration
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
     // Update current page
     this.currentPage = pageName;
     this.history.push(pageName);
     
-    // Prevent scrolling on welcome, loading, exit pages
-    const noScrollPages = ['welcome', 'loading', 'exit'];
-    if (noScrollPages.includes(pageName)) {
-      document.documentElement.classList.add('no-scroll');
-      document.body.classList.add('no-scroll');
-    } else {
-      document.documentElement.classList.remove('no-scroll');
-      document.body.classList.remove('no-scroll');
-    }
+    // Smart scroll handling - check if content fits
+    this.updateScrollBehavior(pageName, targetPageEl);
     
     // Show target page
     targetPageEl.classList.add('active');
@@ -155,6 +192,57 @@ class NavigationController {
 
     // Initialize particles for specific pages
     this.initializePageEffects(pageName);
+  }
+
+  navigateToApology() {
+    this.navigateTo('apology');
+    
+    // Animate apology character with apologetic bow
+    const apologyCanvas = document.getElementById('apologyCharacter');
+    if (apologyCanvas) {
+      gsap.from(apologyCanvas, {
+        scale: 0.3,
+        y: -100,
+        opacity: 0,
+        duration: 1,
+        ease: 'elastic.out(1, 0.3)',
+        delay: 0.2
+      });
+      
+      // Reinitialize apology character if needed
+      if (window.characterController && !window.characterController.apologyCharacter) {
+        window.characterController.apologyCharacter = new CanvasCharacter(apologyCanvas, 'medium');
+        window.characterController.apologyCharacter.setEmotion('sad', true);
+      }
+    }
+    
+    // Animate highlight cards with sequential entrance
+    setTimeout(() => {
+      const highlightCards = document.querySelectorAll('.highlight-card');
+      gsap.from(highlightCards, {
+        scale: 0,
+        y: 50,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: 'back.out(1.7)',
+        delay: 0.5
+      });
+    }, 500);
+    
+    // Pulse the give chance button
+    setTimeout(() => {
+      const giveChanceBtn = document.getElementById('giveChanceBtn');
+      if (giveChanceBtn) {
+        gsap.to(giveChanceBtn, {
+          scale: 1.05,
+          duration: 0.8,
+          ease: 'power1.inOut',
+          yoyo: true,
+          repeat: -1
+        });
+      }
+    }, 1500);
   }
 
   navigateToExit() {
@@ -254,14 +342,26 @@ class NavigationController {
   }
 
   navigateWithLoading(targetPage) {
-    if (this.isTransitioning) return;
+    console.log('Navigate with loading to:', targetPage);
+    
+    if (this.isTransitioning) {
+      console.log('Already transitioning');
+      return;
+    }
+
+    // Scroll to top before showing loading
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
 
     // First go to loading page
     this.navigateTo('loading');
     
     // Start loading animation
     if (window.loadingController) {
+      console.log('Starting loading animation');
       window.loadingController.startLoading(() => {
+        console.log('Loading complete, navigating to', targetPage);
         this.navigateTo(targetPage);
         
         // Celebrate transition
@@ -270,6 +370,7 @@ class NavigationController {
         }
       });
     } else {
+      console.log('Loading controller not found, using fallback');
       // Fallback if loading controller not ready
       setTimeout(() => {
         this.navigateTo(targetPage);
@@ -278,6 +379,12 @@ class NavigationController {
   }
 
   initializePageEffects(pageName) {
+    // Initialize apology page effects
+    if (pageName === 'apology') {
+      // Create floating particles
+      this.createApologyParticles();
+    }
+
     // Initialize particles for welcome page
     if (pageName === 'welcome' && typeof particlesJS !== 'undefined') {
       particlesJS('particles-welcome', {
@@ -316,7 +423,48 @@ class NavigationController {
     }
   }
 
+  createApologyParticles() {
+    const apologyPage = document.getElementById('pageApology');
+    if (!apologyPage) return;
+    
+    // Create gentle floating hearts and stars
+    const symbols = ['💙', '⭐', '✨', '💫', '🌟'];
+    
+    for (let i = 0; i < 20; i++) {
+      setTimeout(() => {
+        const particle = document.createElement('div');
+        particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        particle.style.cssText = `
+          position: absolute;
+          left: ${Math.random() * 100}%;
+          bottom: -50px;
+          font-size: ${15 + Math.random() * 20}px;
+          pointer-events: none;
+          z-index: 1;
+        `;
+        apologyPage.appendChild(particle);
+        
+        gsap.to(particle, {
+          y: -window.innerHeight - 100,
+          x: (Math.random() - 0.5) * 100,
+          rotation: Math.random() * 360,
+          opacity: 0,
+          duration: 4 + Math.random() * 2,
+          ease: 'power1.out',
+          onComplete: () => particle.remove()
+        });
+      }, i * 300);
+    }
+  }
+
   onPageShown(pageName) {
+    // CRITICAL: Force scroll to top
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 50);
+    
     // Update character widget
     if (window.characterController) {
       window.characterController.updateForPage(pageName);
@@ -329,6 +477,24 @@ class NavigationController {
     if (pageName !== 'welcome' && pageName !== 'loading' && pageName !== 'exit') {
       window.history.replaceState(null, '', `#page${this.capitalize(pageName)}`);
     }
+  }
+  
+  updateScrollBehavior(pageName, pageElement) {
+    // Check if page content fits in viewport
+    setTimeout(() => {
+      const contentHeight = pageElement.scrollHeight;
+      const viewportHeight = window.innerHeight;
+      
+      // Only lock scroll if content actually fits AND it's a special page
+      const specialPages = ['welcome', 'loading', 'exit', 'apology'];
+      if (specialPages.includes(pageName) && contentHeight <= viewportHeight) {
+        document.documentElement.classList.add('no-scroll');
+        document.body.classList.add('no-scroll');
+      } else {
+        document.documentElement.classList.remove('no-scroll');
+        document.body.classList.remove('no-scroll');
+      }
+    }, 100);
   }
 
   animatePageElements(pageName) {
@@ -374,6 +540,7 @@ class NavigationController {
   }
 
   capitalize(str) {
+    if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
@@ -388,6 +555,16 @@ class NavigationController {
 
 // Initialize navigation
 const navigationController = new NavigationController();
+
+// Update scroll behavior on window resize
+window.addEventListener('resize', () => {
+  if (navigationController && navigationController.currentPage) {
+    const currentPageEl = document.getElementById(`page${navigationController.capitalize(navigationController.currentPage)}`);
+    if (currentPageEl) {
+      navigationController.updateScrollBehavior(navigationController.currentPage, currentPageEl);
+    }
+  }
+});
 
 // Export for use in other scripts
 if (typeof window !== 'undefined') {

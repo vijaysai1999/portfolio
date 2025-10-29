@@ -22,6 +22,9 @@ class PortfolioApp {
       gsap.registerPlugin(ScrollTrigger);
     }
 
+    // Setup preloader
+    this.setupPreloader();
+
     // Setup contact form
     this.setupContactForm();
 
@@ -33,6 +36,9 @@ class PortfolioApp {
 
     // Setup keyboard shortcuts
     this.setupKeyboardShortcuts();
+    
+    // Setup content fit checker
+    this.setupContentFitChecker();
 
     // Add loading complete class
     setTimeout(() => {
@@ -41,6 +47,82 @@ class PortfolioApp {
 
     this.isInitialized = true;
     console.log('✨ Portfolio App Ready!');
+  }
+  
+  setupPreloader() {
+    const preloader = document.getElementById('preloader');
+    const welcomePage = document.getElementById('pageWelcome');
+    
+    if (!preloader || !welcomePage) return;
+    
+    console.log('Preloader setup started');
+    
+    // Wait for everything to load
+    window.addEventListener('load', () => {
+      console.log('Window loaded, hiding preloader');
+      
+      setTimeout(() => {
+        // Hide preloader
+        preloader.classList.add('hidden');
+        
+        // Show welcome page
+        welcomePage.style.display = 'flex';
+        welcomePage.classList.add('active');
+        
+        // Animate welcome page
+        gsap.from(welcomePage, {
+          opacity: 0,
+          duration: 0.6,
+          ease: 'power2.out'
+        });
+        
+        // Remove preloader after transition
+        setTimeout(() => {
+          preloader.remove();
+          console.log('Preloader removed');
+        }, 500);
+      }, 1000); // Show preloader for at least 1 second
+    });
+  }
+
+  setupContentFitChecker() {
+    // Check if content fits viewport and manage scrolling
+    const checkContentFit = () => {
+      const activePage = document.querySelector('.page.active');
+      if (!activePage) return;
+      
+      const contentHeight = activePage.scrollHeight;
+      const viewportHeight = window.innerHeight;
+      
+      // Get page ID to determine if it's a special page
+      const pageId = activePage.id;
+      const specialPages = ['pageWelcome', 'pageLoading', 'pageExit'];
+      
+      if (specialPages.includes(pageId)) {
+        if (contentHeight <= viewportHeight) {
+          // Content fits, prevent scroll
+          document.documentElement.classList.add('no-scroll');
+          document.body.classList.add('no-scroll');
+        } else {
+          // Content doesn't fit, allow scroll
+          document.documentElement.classList.remove('no-scroll');
+          document.body.classList.remove('no-scroll');
+        }
+      }
+    };
+    
+    // Check on load and resize
+    window.addEventListener('load', checkContentFit);
+    window.addEventListener('resize', checkContentFit);
+    
+    // Check when page becomes active
+    const observer = new MutationObserver(() => {
+      checkContentFit();
+    });
+    
+    document.querySelectorAll('.page').forEach(page => {
+      observer.observe(page, { attributes: true, attributeFilter: ['class'] });
+    });
   }
 
   setupContactForm() {
