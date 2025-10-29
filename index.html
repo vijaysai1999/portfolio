@@ -4,8 +4,203 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vijay Sai Kishore Babu - Portfolio</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js/particles.min.js"></script>
+</head>
+<body>
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-content">
+      <div class="spinner"></div>
+      <p class="preloader-text">Loading awesomeness...</p>
+    </div>
+  </div>
+
+  <!-- Theme Toggle -->
+  <div class="theme-toggle-wrapper">
+    <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle theme">
+      <span class="sun-icon">☀️</span>
+      <span class="moon-icon">🌙</span>
+    </button>
+  </div>
+
+  <!-- Character Widget -->
+  <div class="character-widget" id="characterWidget">
+    <div class="character-bubble" id="characterBubble">Hello! 👋</div>
+    <canvas id="characterCanvas"></canvas>
+  </div>
+
+  <!-- Animated Background Canvas -->
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">VSK</div>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+        <li><a href="#" class="nav-link" data-page="about">About</a></li>
+        <li><a href="#" class="nav-link" data-page="services">Services</a></li>
+        <li><a href="#" class="nav-link" data-page="portfolio">Portfolio</a></li>
+        <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- WELCOME PAGE -->
+  <div class="page page-welcome" id="pageWelcome">
+    <div id="particles-welcome"></div>
+    <div class="welcome-content">
+      <div class="character-showcase">
+        <div class="character-glow"></div>
+        <canvas id="mainCharacter" width="600" height="600"></canvas>
+      </div>
+      
+      <h1 class="welcome-title">Welcome!</h1>
+      <p class="welcome-subtitle">Vijay Sai Kishore Babu</p>
+      <p class="welcome-role">Software Developer | Mainframe &amp; Java Specialist</p>
+      
+      <div class="button-group">
+        <button class="btn btn-primary" data-page="home">
+          <span>Enter Portfolio</span>
+          <span>🚀</span>
+        </button>
+        <button class="btn btn-secondary" data-page="exit">
+          <span>Exit</span>
+          <span>👋</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOADING PAGE -->
+  <div class="page page-loading" id="pageLoading">
+    <div class="loading-content">
+      <div class="loading-character">
+        <canvas id="loadingCharacter" width="400" height="400"></canvas>
+      </div>
+      
+      <h2 class="loading-title">Loading Portfolio</h2>
+      
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      
+      <p class="progress-text" id="progressText">0%</p>
+    </div>
+  </div>
+
+  <!-- EXIT PAGE -->
+  <div class="page page-exit" id="pageExit">
+    <div class="exit-content">
+      <div class="exit-character-sad">
+        <canvas id="exitCharacter" width="400" height="400"></canvas>
+        <div class="tears" id="tearsContainer">
+          <div class="tear"></div>
+          <div class="tear"></div>
+        </div>
+      </div>
+      
+      <h1 class="exit-title">Wait! Don't Leave Yet! 😢</h1>
+      
+      <p class="exit-message">
+        Are you sure you want to go? My portfolio has so much more to offer!
+        Let me show you what you'll miss...
+      </p>
+      
+      <div class="exit-reasons">
+        <div class="reason">💼 Amazing Projects</div>
+        <div class="reason">🚀 Cutting-edge Skills</div>
+        <div class="reason">🎨 Beautiful Design</div>
+        <div class="reason">📧 Easy Contact</div>
+      </div>
+      
+      <div class="button-group">
+        <button class="btn btn-primary" data-page="home">
+          <span>Stay &amp; Explore</span>
+          <span>😊</span>
+        </button>
+        <button class="btn btn-ghost" id="reallyLeaveBtn">
+          <span>Really Leave</span>
+          <span>😔</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- APOLOGY PAGE -->
+  <div class="page page-apology" id="pageApology">
+    <div class="apology-content">
+      <div class="apology-character">
+        <canvas id="apologyCharacter" width="400" height="400"></canvas>
+      </div>
+      
+      <h1 class="apology-title">I'm So Sorry! 🙏</h1>
+      
+      <div class="apology-message">
+        <p class="apology-text">
+          I may have been a bit too eager to show off my portfolio.
+          But I promise it's worth your time!
+        </p>
+        <p class="apology-text">
+          Here's what makes my portfolio special:
+        </p>
+      </div>
+      
+      <div class="highlight-grid">
+        <div class="highlight-card">
+          <span class="highlight-icon">🎯</span>
+          <h3>Focused Expertise</h3>
+          <p>4+ years in Mainframe &amp; Java development</p>
+        </div>
+        <div class="highlight-card">
+          <span class="highlight-icon">🏆</span>
+          <h3>Proven Track Record</h3>
+          <p>Worked with TCS &amp; Infosys on major projects</p>
+        </div>
+        <div class="highlight-card">
+          <span class="highlight-icon">📚</span>
+          <h3>Continuous Learning</h3>
+          <p>AWS &amp; Azure certified professional</p>
+        </div>
+        <div class="highlight-card">
+          <span class="highlight-icon">💡</span>
+          <h3>Innovative Solutions</h3>
+          <p>Modern approaches to legacy systems</p>
+        </div>
+      </div>
+      
+      <p class="apology-text highlight">
+        Give me one more chance to impress you?
+      </p>
+      
+      <div class="final-buttons button-group">
+        <button class="btn btn-primary btn-give-chance" id="giveChanceBtn">
+          <span>Alright, Show Me!</span>
+          <span>🌟</span>
+        </button>
+        <button class="btn btn-secondary" id="finalLeaveBtn">
+          <span>Maybe Later</span>
+          <span>👋</span>
+        </button>
+      </div>
+      
+      <p class="small-text">Promise, no more guilt trips! 😊</p>
+    </div>
+  </div>
+
+  <!-- HOME PAGE -->
+  <div class="page page-home" id="pageHome">
     
     * {
       margin: 0;
@@ -647,79 +842,176 @@
         padding: 100px 20px 60px;
       }
     }
-  </style>
-</head>
-<body>
-  <!-- Animated Background Canvas -->
-  <canvas id="bgCanvas"></canvas>
 
-  <!-- Navigation Header -->
-  <nav class="navbar">
-    <div class="logo">VSK</div>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#home" class="active">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="menu-toggle" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </nav>
-
-  <!-- Welcome Screen -->
-  <div id="welcomeScreen">
-    <div class="canvas-wrapper">
-      <canvas id="barCanvas" width="600" height="400"></canvas>
-    </div>
+    <div id="particles-home"></div>
     
-    <div class="welcome-text">
-      <h1>Welcome to My Portfolio</h1>
-      <p>Vijay Sai Kishore Babu</p>
-      <p>Software Developer | Mainframe &amp; Java Specialist</p>
-    </div>
-    
-    <div class="welcome-buttons">
-      <button class="glass-btn btn-primary" onclick="enterPortfolio()">Enter Portfolio</button>
-      <button class="glass-btn" onclick="alert('Thanks for visiting! Check out my portfolio!')">Exit</button>
-    </div>
-  </div>
-
-  <!-- Loading Overlay -->
-  <div id="loadingOverlay">
-    <div class="loading-text">
-      <h2>Loading Portfolio</h2>
-      <div class="progress-container">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-      <p class="percentage" id="percentage">0%</p>
-    </div>
-  </div>
-
-  <!-- Portfolio Content -->
-  <div id="portfolioContent">
     <!-- Hero Section -->
-    <section id="home">
+    <section class="home-hero">
       <div class="hero-content">
-        <h1>Vijay Sai Kishore Babu</h1>
-        <p class="subtitle">Software Developer | Mainframe &amp; Java Specialist</p>
-        <p class="location">📍 Chennai, India</p>
+        <h1 class="hero-name">Vijay Sai Kishore Babu</h1>
+        <p class="hero-title">Software Developer</p>
+        <p class="hero-subtitle">Mainframe &amp; Java Specialist | 📍 Chennai, India</p>
+        
+        <div class="hero-stats">
+          <div class="stat-card">
+            <div class="stat-number">4+</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">15+</div>
+            <div class="stat-label">Technologies</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">Projects</div>
+          </div>
+        </div>
+        
+        <div class="hero-cta button-group">
+          <button class="btn btn-primary" data-page="about">
+            <span>Learn More</span>
+            <span>👨‍💻</span>
+          </button>
+          <button class="btn btn-secondary" data-page="contact">
+            <span>Get In Touch</span>
+            <span>📧</span>
+          </button>
+        </div>
+      </div>
+      
+      <div class="scroll-indicator">
+        <span>Scroll Down</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section class="home-section skills-section">
+      <div class="section-container">
+        <h2 class="section-heading">Technical Expertise</h2>
+        <p class="section-description">Bridging legacy and modern technologies</p>
+        
+        <div class="skills-grid-home">
+          <div class="skill-card-home animate-on-scroll">
+            <div class="skill-icon">💻</div>
+            <h3>Mainframe Development</h3>
+            <div class="skill-list">
+              <span>COBOL</span>
+              <span>JCL</span>
+              <span>CICS</span>
+              <span>DB2</span>
+              <span>VSAM</span>
+            </div>
+          </div>
+          
+          <div class="skill-card-home animate-on-scroll">
+            <div class="skill-icon">☕</div>
+            <h3>Java Development</h3>
+            <div class="skill-list">
+              <span>Core Java</span>
+              <span>Spring Boot</span>
+              <span>Spring MVC</span>
+              <span>RESTful APIs</span>
+            </div>
+          </div>
+          
+          <div class="skill-card-home animate-on-scroll">
+            <div class="skill-icon">☁️</div>
+            <h3>Cloud &amp; DevOps</h3>
+            <div class="skill-list">
+              <span>AWS</span>
+              <span>Azure</span>
+              <span>Jenkins</span>
+              <span>Git</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Experience Section -->
+    <section class="home-section experience-section">
+      <div class="section-container">
+        <h2 class="section-heading">Work Experience</h2>
+        <p class="section-description">Building enterprise solutions at scale</p>
+        
+        <div class="experience-cards">
+          <div class="exp-card animate-on-scroll">
+            <div class="exp-header">
+              <div class="exp-company">Tata Consultancy Services</div>
+              <div class="exp-badge current">Current</div>
+            </div>
+            <div class="exp-role">Developer | System Engineer</div>
+            <div class="exp-period">May 2023 - Present</div>
+            <div class="exp-client">Working on mainframe modernization projects</div>
+            <ul class="exp-highlights">
+              <li>Leading mainframe to cloud migration initiatives</li>
+              <li>Developing COBOL, JCL, CICS applications</li>
+              <li>Implementing DB2 database solutions</li>
+            </ul>
+          </div>
+          
+          <div class="exp-card animate-on-scroll">
+            <div class="exp-header">
+              <div class="exp-company">Infosys Ltd</div>
+              <div class="exp-badge">2 Years</div>
+            </div>
+            <div class="exp-role">Software Developer (Mainframes)</div>
+            <div class="exp-period">June 2021 - May 2023</div>
+            <div class="exp-client">Client: Royal Bank of Scotland</div>
+            <ul class="exp-highlights">
+              <li>Worked with SAFe Agile methodology</li>
+              <li>Full SDLC experience with mainframe technologies</li>
+              <li>Requirements gathering and documentation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="home-section cta-section">
+      <div class="section-container">
+        <h2 class="cta-heading">Let's Work Together</h2>
+        <p class="cta-description">
+          Ready to bring your project to life? I'm available for freelance work and full-time opportunities.
+        </p>
+        
+        <div class="cta-buttons">
+          <button class="btn btn-primary" data-page="contact">
+            <span>Contact Me</span>
+            <span>✉️</span>
+          </button>
+          <button class="btn btn-secondary" data-page="portfolio">
+            <span>View Portfolio</span>
+            <span>🎨</span>
+          </button>
+        </div>
       </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about">
+  </div>
+
+  <!-- ABOUT PAGE -->
+  <div class="page page-about" id="pageAbout">
+    <div class="about-container">
+      <h1 class="page-title">About Me</h1>
+      <p class="page-subtitle">Software Developer | Problem Solver | Tech Enthusiast</p>
+      
+      <section id="about">
       <div class="container">
         <h2 class="section-title">About Me</h2>
         
-        <!-- Profile Image -->
-        <div class="profile-image-container">
-          <div class="profile-glow"></div>
-          <div class="profile-image">
-            <div class="placeholder-avatar">👨‍💻</div>
+        <!-- LARGE Profile Image - 300x300px -->
+        <div class="profile-container">
+          <div class="profile-image-wrapper">
+            <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/7f93a1df-8256-44bf-965f-92e072a7727b.png" 
+                 alt="Vijay Sai Kishore Babu - Profile Photo" 
+                 class="profile-img" 
+                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27300%27 height=%27300%27%3E%3Crect fill=%27%238b5cf6%27 width=%27300%27 height=%27300%27/%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-size=%2780%27 text-anchor=%27middle%27 dy=%27.3em%27 fill=%27white%27%3E👨‍💻%3C/text%3E%3C/svg%3E'">
+            <div class="profile-glow"></div>
           </div>
         </div>
         
@@ -731,6 +1023,19 @@
           </p>
         </div>
         
+        <div class="about-grid">
+          <div class="about-card animate-on-scroll">
+            <h2>🎯 Mission</h2>
+            <p>To bridge the gap between legacy mainframe systems and modern cloud technologies, delivering robust and scalable solutions.</p>
+          </div>
+          
+          <div class="about-card animate-on-scroll">
+            <h2>💡 Philosophy</h2>
+            <p>Continuous learning and adaptation are key to staying relevant in the ever-evolving tech landscape.</p>
+          </div>
+        </div>
+        
+        <h2 class="section-title">Quick Stats</h2>
         <div class="stats-grid">
           <div class="stat-card">
             <h3>4+</h3>
@@ -749,11 +1054,310 @@
             <p>Projects Completed</p>
           </div>
         </div>
-      </div>
-    </section>
+        
+        <h2 class="section-title">Professional Timeline</h2>
+        
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-badge current">Current</div>
+            <div class="timeline-content">
+              <h3>Tata Consultancy Services</h3>
+              <h4>Developer | System Engineer</h4>
+              <p class="timeline-period">May 2023 - Present | Chennai, India</p>
+              <ul>
+                <li>Mainframe development and migration projects</li>
+                <li>COBOL, JCL, CICS, DB2 expertise</li>
+                <li>Legacy to modern system migrations</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-badge">2 Years</div>
+            <div class="timeline-content">
+              <h3>Infosys Ltd</h3>
+              <h4>Software Developer (Mainframes)</h4>
+              <p class="timeline-period">June 2021 - May 2023</p>
+              <p class="timeline-client">Client: Royal Bank of Scotland</p>
+              <ul>
+                <li>SAFe Agile framework implementation</li>
+                <li>Full SDLC experience</li>
+                <li>Requirements gathering and documentation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <h2 class="section-title">Education</h2>
+        
+        <div class="education-grid">
+          <div class="education-card animate-on-scroll">
+            <div class="edu-icon">🎓</div>
+            <h3>Bachelor's Degree</h3>
+            <p>Computer Science &amp; Engineering</p>
+            <p>2017 - 2021</p>
+          </div>
+          
+          <div class="education-card animate-on-scroll">
+            <div class="edu-icon">☁️</div>
+            <h3>AWS Certified</h3>
+            <p>Cloud Practitioner</p>
+            <div class="edu-badge">Certified</div>
+          </div>
+          
+          <div class="education-card animate-on-scroll">
+            <div class="edu-icon">🔷</div>
+            <h3>Microsoft Azure</h3>
+            <p>AZ-900 Fundamentals</p>
+            <div class="edu-badge">Certified</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
 
-    <!-- Experience Section -->
-    <section id="experience">
+  <!-- SERVICES PAGE -->
+  <div class="page page-services" id="pageServices">
+    <div class="services-container">
+      <h1 class="page-title">Services</h1>
+      <p class="page-subtitle">What I can do for you</p>
+      
+      <div class="services-grid">
+        <div class="service-card animate-on-scroll">
+          <div class="service-icon">🖥️</div>
+          <h3>Mainframe Development</h3>
+          <p>Expert development and maintenance of mainframe applications using COBOL, JCL, CICS, and DB2.</p>
+          <ul class="service-features">
+            <li>COBOL programming</li>
+            <li>JCL scripting</li>
+            <li>CICS transaction processing</li>
+            <li>DB2 database management</li>
+          </ul>
+        </div>
+        
+        <div class="service-card animate-on-scroll">
+          <div class="service-icon">☕</div>
+          <h3>Java Development</h3>
+          <p>Modern Java applications with Spring framework, microservices, and RESTful APIs.</p>
+          <ul class="service-features">
+            <li>Spring Boot applications</li>
+            <li>RESTful API development</li>
+            <li>Microservices architecture</li>
+            <li>Database integration</li>
+          </ul>
+        </div>
+        
+        <div class="service-card animate-on-scroll">
+          <div class="service-icon">🔄</div>
+          <h3>Legacy Modernization</h3>
+          <p>Migrating legacy mainframe systems to modern cloud-based architectures.</p>
+          <ul class="service-features">
+            <li>Assessment &amp; planning</li>
+            <li>Code refactoring</li>
+            <li>Cloud migration</li>
+            <li>Testing &amp; validation</li>
+          </ul>
+        </div>
+        
+        <div class="service-card animate-on-scroll">
+          <div class="service-icon">☁️</div>
+          <h3>Cloud Solutions</h3>
+          <p>Cloud-native application development and deployment on AWS and Azure.</p>
+          <ul class="service-features">
+            <li>AWS/Azure architecture</li>
+            <li>Cloud deployment</li>
+            <li>DevOps integration</li>
+            <li>Cost optimization</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PORTFOLIO PAGE -->
+  <div class="page page-portfolio" id="pagePortfolio">
+    <div class="portfolio-container">
+      <h1 class="page-title">Portfolio</h1>
+      <p class="page-subtitle">Featured projects and work</p>
+      
+      <div class="portfolio-grid">
+        <div class="project-card animate-on-scroll">
+          <div class="project-image">
+            <span style="font-size: 80px;">🏦</span>
+            <div class="project-overlay">
+              <span class="project-tag">Enterprise</span>
+            </div>
+          </div>
+          <div class="project-content">
+            <h3>Banking System Modernization</h3>
+            <p>Led the migration of legacy mainframe banking systems to modern cloud infrastructure.</p>
+            <div class="project-tech">
+              <span>COBOL</span>
+              <span>Java</span>
+              <span>AWS</span>
+              <span>Spring Boot</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="project-card animate-on-scroll">
+          <div class="project-image">
+            <span style="font-size: 80px;">📊</span>
+            <div class="project-overlay">
+              <span class="project-tag">Data Processing</span>
+            </div>
+          </div>
+          <div class="project-content">
+            <h3>Real-time Data Pipeline</h3>
+            <p>Developed a high-performance data processing pipeline for financial transactions.</p>
+            <div class="project-tech">
+              <span>JCL</span>
+              <span>DB2</span>
+              <span>CICS</span>
+              <span>VSAM</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="project-card animate-on-scroll">
+          <div class="project-image">
+            <span style="font-size: 80px;">🔐</span>
+            <div class="project-overlay">
+              <span class="project-tag">Security</span>
+            </div>
+          </div>
+          <div class="project-content">
+            <h3>Secure API Gateway</h3>
+            <p>Built a secure API gateway for integrating legacy systems with modern applications.</p>
+            <div class="project-tech">
+              <span>Spring Boot</span>
+              <span>REST API</span>
+              <span>OAuth2</span>
+              <span>Azure</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT PAGE -->
+  <div class="page page-contact" id="pageContact">
+    <div class="contact-container">
+      <h1 class="page-title">Get In Touch</h1>
+      <p class="page-subtitle">Let's discuss your next project</p>
+      
+      <div class="contact-content">
+        <div class="contact-info">
+          <div class="contact-card animate-on-scroll">
+            <div class="contact-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </div>
+            <h3>Email</h3>
+            <a href="mailto:vijaysai1999@gmail.com">vijaysai1999@gmail.com</a>
+          </div>
+          
+          <div class="contact-card animate-on-scroll">
+            <div class="contact-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </div>
+            <h3>Phone</h3>
+            <a href="tel:+918807373279">+91 8807373279</a>
+          </div>
+          
+          <div class="contact-card animate-on-scroll">
+            <div class="contact-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+            </div>
+            <h3>GitHub</h3>
+            <a href="https://github.com/vijaysai1999" target="_blank">@vijaysai1999</a>
+          </div>
+        </div>
+        
+        <div class="contact-form-wrapper animate-on-scroll">
+          <form id="contactForm">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="6" required></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-full">
+              <span>Send Message</span>
+              <span>📧</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-wave">
+      <svg viewBox="0 0 1200 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,50 Q300,0 600,50 T1200,50 L1200,100 L0,100 Z" fill="url(#footerGradient)" />
+        <defs>
+          <linearGradient id="footerGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    
+    <div class="footer-content">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <h3>VSK</h3>
+          <p>Software Developer</p>
+        </div>
+        
+        <div class="footer-links">
+          <a href="#" data-page="home">Home</a>
+          <a href="#" data-page="about">About</a>
+          <a href="#" data-page="services">Services</a>
+          <a href="#" data-page="portfolio">Portfolio</a>
+          <a href="#" data-page="contact">Contact</a>
+        </div>
+        
+        <div class="footer-social">
+          <a href="https://github.com/vijaysai1999" target="_blank">🐱 GitHub</a>
+          <a href="#" data-page="contact">💼 LinkedIn</a>
+          <a href="mailto:vijaysai1999@gmail.com">✉️ Email</a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p class="footer-tagline">Designed with <span class="heart">❤️</span> &amp; passion by <span class="name">Vijay Sai Kishore Babu</span></p>
+        <p class="copyright">© 2025 All Rights Reserved • Crafted with innovation &amp; creativity</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript Files -->
+  <script src="app.js"></script>
+</body>
+</html>
+
+
       <div class="container">
         <h2 class="section-title">Experience</h2>
         
@@ -786,11 +1390,7 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Skills Section -->
-    <section id="skills">
       <div class="container">
         <h2 class="section-title">Technical Skills</h2>
         
@@ -829,11 +1429,7 @@
             <span class="skill-tag">MySQL</span>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Contact Section -->
-    <section id="contact">
       <div class="container">
         <h2 class="section-title">Get In Touch</h2>
         
@@ -853,12 +1449,7 @@
             <a href="https://github.com/vijaysai1999" target="_blank">GitHub Profile</a>
           </div>
         </div>
-      </div>
-    </section>
-  </div>
 
-  <!-- STUNNING FOOTER -->
-  <footer class="footer">
     <div class="footer-wave">
       <svg viewBox="0 0 1200 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <path d="M0,50 Q300,0 600,50 T1200,50 L1200,100 L0,100 Z" fill="url(#footerGradient)" />
@@ -899,10 +1490,8 @@
         <p class="copyright">© 2025 All Rights Reserved • Crafted with innovation &amp; creativity</p>
       </div>
     </div>
-  </footer>
 
-  <script>
-    // ============ ANIMATED BACKGROUND ============
+
     const bgCanvas = document.getElementById('bgCanvas');
     const bgCtx = bgCanvas.getContext('2d');
     bgCanvas.width = window.innerWidth;

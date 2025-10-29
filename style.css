@@ -1080,14 +1080,13 @@ body {
     padding: 20px;
   }
   
-  .profile-image-container {
-    width: 200px;
-    height: 200px;
-    margin-bottom: 30px;
+  .profile-image-wrapper {
+    width: 240px;
+    height: 240px;
   }
   
   .placeholder-avatar {
-    font-size: 60px;
+    font-size: 70px;
   }
   
   .footer-tagline {
@@ -2239,50 +2238,53 @@ body {
   color: var(--text-secondary);
 }
 
-/* Profile Image with Floating Animation */
-.profile-image-container {
-  position: relative;
-  width: 250px;
-  height: 250px;
-  margin: 0 auto 50px;
+/* LARGE Profile Image with Floating Animation - 300x300px */
+.profile-container {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0 60px;
 }
 
-.profile-image {
+.profile-image-wrapper {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+.profile-img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  overflow: hidden;
-  border: 5px solid var(--glass-border);
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 20px 60px rgba(139, 92, 246, 0.4);
+  object-fit: cover;
+  border: 6px solid var(--glass-border);
+  box-shadow: 0 20px 60px rgba(139, 92, 246, 0.6);
   animation: float 3s ease-in-out infinite;
   position: relative;
   z-index: 2;
+  display: block;
 }
 
 .profile-glow {
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
   border-radius: 50%;
-  filter: blur(30px);
-  opacity: 0.5;
+  filter: blur(40px);
+  opacity: 0.6;
   z-index: 1;
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
 .placeholder-avatar {
-  font-size: 80px;
+  font-size: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 @keyframes float {
