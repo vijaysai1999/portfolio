@@ -3,7 +3,7 @@ class LoadingController {
   constructor() {
     this.progressFill = document.getElementById('progressFill');
     this.progressText = document.getElementById('progressText');
-    this.loadingCharacter = document.querySelector('.loading-character-img');
+    this.loadingCanvas = document.getElementById('loadingCharacter');
     this.currentProgress = 0;
     this.targetProgress = 0;
     this.isLoading = false;
@@ -24,15 +24,39 @@ class LoadingController {
       this.progressText.textContent = '0%';
     }
 
-    // Animate character entrance
-    if (this.loadingCharacter) {
-      gsap.from(this.loadingCharacter, {
+    // Stunning character entrance animation
+    if (this.loadingCanvas) {
+      gsap.from(this.loadingCanvas, {
         scale: 0,
         rotation: -360,
         opacity: 0,
         duration: 0.8,
         ease: 'elastic.out(1, 0.5)'
       });
+      
+      // Continuous bounce during loading
+      gsap.to(this.loadingCanvas, {
+        y: -30,
+        duration: 0.6,
+        ease: 'power1.inOut',
+        yoyo: true,
+        repeat: -1
+      });
+      
+      // Slight rotation
+      gsap.to(this.loadingCanvas, {
+        rotation: 10,
+        duration: 0.8,
+        ease: 'power1.inOut',
+        yoyo: true,
+        repeat: -1
+      });
+      
+      // Reinitialize loading character if needed
+      if (window.characterController && !window.characterController.loadingCharacter) {
+        window.characterController.loadingCharacter = new CanvasCharacter(this.loadingCanvas, 'medium');
+        window.characterController.loadingCharacter.setEmotion('excited', true);
+      }
     }
 
     // Start progress animation
@@ -80,10 +104,10 @@ class LoadingController {
 
   showLoadingTips() {
     const tips = [
-      'Preparing awesome content...',
-      'Loading projects...',
-      'Polishing animations...',
-      'Almost there...'
+      '✨ Preparing awesome content...',
+      '🚀 Loading projects...',
+      '🎨 Polishing animations...',
+      '⚡ Almost there...'
     ];
 
     const loadingTitle = document.querySelector('.loading-title');
@@ -99,33 +123,57 @@ class LoadingController {
       loadingTitle.textContent = tips[tipIndex];
       
       gsap.from(loadingTitle, {
-        y: 10,
+        scale: 0.8,
+        y: 20,
         opacity: 0,
-        duration: 0.4,
-        ease: 'power2.out'
+        duration: 0.5,
+        ease: 'back.out(1.7)'
       });
 
       tipIndex++;
-    }, 700);
+    }, 600);
   }
 
   completeLoading() {
     this.isLoading = false;
 
-    // Final celebration animation
-    if (this.loadingCharacter) {
+    // Kill all loading animations
+    gsap.killTweensOf(this.loadingCanvas);
+
+    // Final STUNNING celebration animation
+    if (this.loadingCanvas) {
+      // Happy character animation
+      if (window.characterController && window.characterController.loadingCharacter) {
+        window.characterController.loadingCharacter.setEmotion('happy');
+      }
+      
+      // Create particle burst
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          if (window.portfolioApp && window.portfolioApp.createParticleEffect) {
+            const canvas = this.loadingCanvas;
+            const rect = canvas.getBoundingClientRect();
+            const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 100;
+            const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 100;
+            const colors = ['#6366f1', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b'];
+            window.portfolioApp.createParticleEffect(x, y, colors[i % colors.length]);
+          }
+        }, i * 20);
+      }
+      
       gsap.timeline()
-        .to(this.loadingCharacter, {
-          scale: 1.3,
-          rotation: 360,
-          duration: 0.5,
+        .to(this.loadingCanvas, {
+          scale: 1.4,
+          rotation: 720,
+          duration: 0.6,
           ease: 'power2.inOut'
         })
-        .to(this.loadingCharacter, {
+        .to(this.loadingCanvas, {
           scale: 0,
           opacity: 0,
-          duration: 0.3,
-          ease: 'back.in(1.7)',
+          y: -100,
+          duration: 0.4,
+          ease: 'back.in(2)',
           onComplete: () => {
             if (this.callback) {
               this.callback();

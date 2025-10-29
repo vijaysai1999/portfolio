@@ -119,6 +119,16 @@ class NavigationController {
     this.currentPage = pageName;
     this.history.push(pageName);
     
+    // Prevent scrolling on welcome, loading, exit pages
+    const noScrollPages = ['welcome', 'loading', 'exit'];
+    if (noScrollPages.includes(pageName)) {
+      document.documentElement.classList.add('no-scroll');
+      document.body.classList.add('no-scroll');
+    } else {
+      document.documentElement.classList.remove('no-scroll');
+      document.body.classList.remove('no-scroll');
+    }
+    
     // Show target page
     targetPageEl.classList.add('active');
 
@@ -150,10 +160,10 @@ class NavigationController {
   navigateToExit() {
     this.navigateTo('exit');
     
-    // Animate sad character
-    const exitChar = document.querySelector('.exit-character-img');
-    if (exitChar) {
-      gsap.from(exitChar, {
+    // Animate sad character canvas with dramatic entrance
+    const exitCanvas = document.getElementById('exitCharacter');
+    if (exitCanvas) {
+      gsap.from(exitCanvas, {
         scale: 0.5,
         rotation: -180,
         opacity: 0,
@@ -161,6 +171,85 @@ class NavigationController {
         ease: 'elastic.out(1, 0.5)',
         delay: 0.3
       });
+      
+      // Continuous sad wobble animation
+      gsap.to(exitCanvas, {
+        rotation: 5,
+        y: 10,
+        duration: 1,
+        ease: 'power1.inOut',
+        yoyo: true,
+        repeat: -1,
+        delay: 1.3
+      });
+      
+      // Reinitialize exit character if needed
+      if (window.characterController && !window.characterController.exitCharacter) {
+        window.characterController.exitCharacter = new CanvasCharacter(exitCanvas, 'medium');
+        window.characterController.exitCharacter.setEmotion('sad', true);
+      }
+    }
+    
+    // Animate tears with continuous fall
+    const tears = document.getElementById('tearsContainer');
+    if (tears) {
+      const tearElements = tears.querySelectorAll('.tear');
+      gsap.from(tearElements, {
+        opacity: 0,
+        y: -20,
+        duration: 0.8,
+        stagger: 0.2,
+        delay: 0.5
+      });
+    }
+    
+    // Animate exit reasons with stagger
+    setTimeout(() => {
+      const reasons = document.querySelectorAll('.page-exit .reason');
+      gsap.from(reasons, {
+        scale: 0,
+        rotation: -180,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: 'back.out(1.7)'
+      });
+    }, 800);
+    
+    // Add floating emoji animation
+    this.createFloatingEmojis();
+  }
+  
+  createFloatingEmojis() {
+    const exitPage = document.getElementById('pageExit');
+    if (!exitPage) return;
+    
+    const emojis = ['😢', '😭', '🙏', '❤️', '⭐', '🎉'];
+    
+    for (let i = 0; i < 15; i++) {
+      setTimeout(() => {
+        const emoji = document.createElement('div');
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.cssText = `
+          position: absolute;
+          left: ${Math.random() * 100}%;
+          bottom: -50px;
+          font-size: ${20 + Math.random() * 30}px;
+          pointer-events: none;
+          z-index: 10;
+        `;
+        exitPage.appendChild(emoji);
+        
+        gsap.to(emoji, {
+          y: -window.innerHeight - 100,
+          x: (Math.random() - 0.5) * 200,
+          rotation: Math.random() * 360,
+          opacity: 0,
+          duration: 3 + Math.random() * 2,
+          ease: 'power1.out',
+          onComplete: () => emoji.remove()
+        });
+      }, i * 200);
     }
   }
 

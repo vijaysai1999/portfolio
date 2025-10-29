@@ -29,7 +29,7 @@
     <!-- Animated Character Container (appears on all pages) -->
     <div class="character-widget" id="characterWidget">
         <div class="character-bubble" id="characterBubble"></div>
-        <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/62f93189-e275-4043-9c62-276aa2c6106e.png" alt="Interactive Character" class="character-image" id="characterImage">
+        <canvas id="characterCanvas" width="120" height="120"></canvas>
     </div>
 
     <!-- Page: Welcome/Index -->
@@ -38,7 +38,7 @@
         <div class="welcome-content">
             <div class="character-showcase">
                 <div class="character-glow"></div>
-                <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/62f93189-e275-4043-9c62-276aa2c6106e.png" alt="Vijay's Character" class="main-character" id="mainCharacter">
+                <canvas id="mainCharacter" width="600" height="600"></canvas>
             </div>
             <h1 class="welcome-title">Welcome to My Universe</h1>
             <p class="welcome-subtitle">Vijay Sai Kishore Babu</p>
@@ -64,7 +64,7 @@
     <section class="page page-loading" id="pageLoading">
         <div class="loading-content">
             <div class="loading-character">
-                <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/62f93189-e275-4043-9c62-276aa2c6106e.png" alt="Loading" class="loading-character-img">
+                <canvas id="loadingCharacter" width="400" height="400"></canvas>
             </div>
             <h2 class="loading-title">Preparing Your Experience</h2>
             <div class="progress-bar">
@@ -78,8 +78,8 @@
     <section class="page page-exit" id="pageExit">
         <div class="exit-content">
             <div class="exit-character-sad">
-                <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/62f93189-e275-4043-9c62-276aa2c6106e.png" alt="Sad Character" class="exit-character-img">
-                <div class="tears">
+                <canvas id="exitCharacter" width="400" height="400"></canvas>
+                <div class="tears" id="tearsContainer">
                     <div class="tear"></div>
                     <div class="tear"></div>
                 </div>
@@ -149,8 +149,112 @@
                     <button class="btn btn-primary" data-page="contact">Get In Touch</button>
                     <button class="btn btn-secondary" data-page="portfolio">View Projects</button>
                 </div>
+                <div class="scroll-indicator">
+                    <span>Scroll to explore</span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14M5 12l7 7 7-7"/>
+                    </svg>
+                </div>
             </div>
         </div>
+
+        <!-- Skills Section -->
+        <section class="home-section skills-section" id="skillsSection">
+            <div class="section-container">
+                <h2 class="section-heading">Technical Expertise</h2>
+                <p class="section-description">Specialized in both legacy and modern technologies</p>
+                <div class="skills-grid-home">
+                    <div class="skill-card-home" style="background: var(--color-bg-1);">
+                        <div class="skill-icon">💻</div>
+                        <h3>Mainframe Technologies</h3>
+                        <div class="skill-list">
+                            <span>COBOL</span>
+                            <span>JCL</span>
+                            <span>CICS</span>
+                            <span>DB2</span>
+                            <span>VSAM</span>
+                        </div>
+                    </div>
+                    <div class="skill-card-home" style="background: var(--color-bg-2);">
+                        <div class="skill-icon">☕</div>
+                        <h3>Java Ecosystem</h3>
+                        <div class="skill-list">
+                            <span>Core Java</span>
+                            <span>Spring Boot</span>
+                            <span>Spring MVC</span>
+                            <span>RESTful APIs</span>
+                        </div>
+                    </div>
+                    <div class="skill-card-home" style="background: var(--color-bg-3);">
+                        <div class="skill-icon">☁️</div>
+                        <h3>Cloud Platforms</h3>
+                        <div class="skill-list">
+                            <span>Azure (AZ-900)</span>
+                            <span>AWS Certified</span>
+                            <span>Cloud Migration</span>
+                        </div>
+                    </div>
+                    <div class="skill-card-home" style="background: var(--color-bg-4);">
+                        <div class="skill-icon">🗄️</div>
+                        <h3>Databases</h3>
+                        <div class="skill-list">
+                            <span>DB2</span>
+                            <span>MongoDB</span>
+                            <span>MySQL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section class="home-section experience-section" id="experienceSection">
+            <div class="section-container">
+                <h2 class="section-heading">Professional Journey</h2>
+                <p class="section-description">4+ years delivering impactful solutions</p>
+                <div class="experience-cards">
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <div class="exp-company">Tata Consultancy Services</div>
+                            <div class="exp-badge current">Current</div>
+                        </div>
+                        <div class="exp-role">System Engineer - Developer</div>
+                        <div class="exp-period">May 2023 - Present • Chennai, India</div>
+                        <ul class="exp-highlights">
+                            <li>Leading mainframe to modern system migrations</li>
+                            <li>Expertise in SDLC across legacy and modern platforms</li>
+                            <li>Code testing and deployment optimization</li>
+                        </ul>
+                    </div>
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <div class="exp-company">Infosys Ltd</div>
+                            <div class="exp-badge">Previous</div>
+                        </div>
+                        <div class="exp-role">Senior Systems Associate</div>
+                        <div class="exp-period">June 2021 - May 2023 • Chennai, India</div>
+                        <div class="exp-client">Client: Royal Bank of Scotland</div>
+                        <ul class="exp-highlights">
+                            <li>Worked in SAFe Agile framework</li>
+                            <li>Enhanced banking applications</li>
+                            <li>Cross-functional team collaboration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="home-section cta-section" id="ctaSection">
+            <div class="section-container">
+                <h2 class="cta-heading">Let's Build Something Amazing</h2>
+                <p class="cta-description">Ready to discuss your next project?</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" data-page="contact">Get In Touch</button>
+                    <button class="btn btn-secondary" data-page="about">Learn More About Me</button>
+                </div>
+            </div>
+        </section>
     </section>
 
     <!-- Page: About -->
