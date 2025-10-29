@@ -217,6 +217,9 @@ class BarCharacter {
     
     ctx.shadowBlur = 0;
     
+    // Draw mouth with better expressions
+    this.drawMouth(ctx);
+    
     // Update eye positions on tilted bar
     const eyeHeight = canvasHeight - this.currentHeight * 0.7;
     const tiltOffset = Math.tan(this.tiltAngle) * this.currentHeight * 0.7;
@@ -230,6 +233,61 @@ class BarCharacter {
     
     // Draw particles
     this.updateParticles(ctx);
+  }
+  
+  drawMouth(ctx) {
+    const canvasHeight = this.canvas.height;
+    const mouthY = canvasHeight - this.currentHeight * 0.5;
+    const mouthX = this.baseX + this.width / 2 + Math.tan(this.tiltAngle) * this.currentHeight * 0.5;
+    const mouthWidth = this.width * 0.5;
+    
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+    ctx.lineWidth = 4;
+    ctx.lineCap = 'round';
+    
+    if (this.emotion === 'happy') {
+      // Big smile with teeth
+      ctx.beginPath();
+      ctx.moveTo(mouthX - mouthWidth / 2, mouthY);
+      ctx.quadraticCurveTo(
+        mouthX,
+        mouthY + 20,
+        mouthX + mouthWidth / 2,
+        mouthY
+      );
+      ctx.stroke();
+      
+      // Draw teeth
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      for (let i = 0; i < 5; i++) {
+        const tx = mouthX - mouthWidth / 4 + (i * 8);
+        const ty = mouthY + 8;
+        ctx.fillRect(tx, ty, 6, 8);
+      }
+    } else if (this.emotion === 'sad' || this.emotion === 'crying') {
+      // Deep frown with trembling
+      const tremble = Math.sin(Date.now() * 0.01) * 2;
+      ctx.beginPath();
+      ctx.moveTo(mouthX - mouthWidth / 2, mouthY);
+      ctx.quadraticCurveTo(
+        mouthX,
+        mouthY - 20 + tremble,
+        mouthX + mouthWidth / 2,
+        mouthY
+      );
+      ctx.stroke();
+    } else {
+      // Neutral slight curve
+      ctx.beginPath();
+      ctx.moveTo(mouthX - mouthWidth / 2, mouthY);
+      ctx.quadraticCurveTo(
+        mouthX,
+        mouthY + 5,
+        mouthX + mouthWidth / 2,
+        mouthY
+      );
+      ctx.stroke();
+    }
   }
   
   drawEyes(ctx) {
@@ -412,8 +470,10 @@ class CanvasCharacter {
     ];
     
     this.baseBarHeights = [300, 400, 350, 380];
+    this.barWidth = 80;
     
     this.bars = [];
+    this.tears = [];
     this.createBars();
     
     this.emotion = 'neutral';
@@ -425,13 +485,16 @@ class CanvasCharacter {
   
   createBars() {
     this.bars = [];
-    const spacing = this.width / 5;
+    // Calculate total width needed for 4 bars with NO spacing
+    const totalBarWidth = this.barWidth * 4;
+    const startX = (this.width - totalBarWidth) / 2;
     
     for (let i = 0; i < 4; i++) {
-      const x = spacing * (i + 0.5);
+      // Bars are positioned directly next to each other - NO GAPS
+      const x = startX + (this.barWidth * i);
       this.bars.push(new BarCharacter(
         this.canvas,
-        x - 40,
+        x,
         this.baseBarHeights[i] * (this.height / 600),
         this.barColors[i],
         i
@@ -483,6 +546,26 @@ class CanvasCharacter {
   setEmotion(emotion, immediate = false) {
     this.emotion = emotion;
     this.bars.forEach(bar => bar.setEmotion(emotion, immediate));
+    
+    // Start crying animation for sad emotion
+    if (emotion === 'sad' || emotion === 'crying') {
+      this.startCrying();
+    } else {
+      this.tears = [];
+    }
+  }
+  
+  startCrying() {
+    // Create tears from eyes
+    if (Math.random() > 0.9) {
+      this.bars.forEach(bar => {
+        if (Math.random() > 0.5) {
+          const eyeX = bar.topX + 20 + (Math.random() > 0.5 ? 0 : 40);
+          const eyeY = this.height - bar.currentHeight * 0.7;
+          this.tears.push(new TearDrop(eyeX, eyeY));
+        }
+      });
+    }
   }
   
   updateMousePosition(x, y) {
@@ -495,6 +578,11 @@ class CanvasCharacter {
     // Clear canvas
     this.ctx.clearRect(0, 0, this.width, this.height);
     
+    // Continue crying if sad
+    if (this.emotion === 'sad' || this.emotion === 'crying') {
+      this.startCrying();
+    }
+    
     // Draw shared base platform
     this.drawBasePlatform();
     
@@ -504,7 +592,18 @@ class CanvasCharacter {
       bar.draw(this.ctx);
     });
     
+    // Draw and update tears
+    this.drawTears();
+    
     requestAnimationFrame(() => this.animate());
+  }
+  
+  drawTears() {
+    this.tears = this.tears.filter(tear => {
+      tear.update();
+      tear.draw(this.ctx);
+      return tear.y < this.height;
+    });
   }
   
   drawBasePlatform() {
@@ -839,6 +938,43 @@ class CharacterController {
         this.widgetCharacter.setEmotion('neutral');
       }, 1500);
     }
+  }
+}
+
+// TearDrop class for crying animation
+class TearDrop {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.speed = 2 + Math.random() * 2;
+    this.size = 4 + Math.random() * 3;
+    this.opacity = 0.7;
+  }
+  
+  update() {
+    this.y += this.speed;
+    this.speed += 0.15; // Gravity acceleration
+  }
+  
+  draw(ctx) {
+    ctx.fillStyle = `rgba(100, 200, 255, ${this.opacity})`;
+    ctx.shadowColor = 'rgba(100, 200, 255, 0.5)';
+    ctx.shadowBlur = 8;
+    
+    // Teardrop shape
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Tail of teardrop
+    ctx.beginPath();
+    ctx.moveTo(this.x, this.y - this.size);
+    ctx.lineTo(this.x - this.size / 2, this.y - this.size * 2);
+    ctx.lineTo(this.x + this.size / 2, this.y - this.size * 2);
+    ctx.closePath();
+    ctx.fill();
+    
+    ctx.shadowBlur = 0;
   }
 }
 

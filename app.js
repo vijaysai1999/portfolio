@@ -53,6 +53,25 @@ class PortfolioApp {
     const preloader = document.getElementById('preloader');
     const welcomePage = document.getElementById('pageWelcome');
     
+    // Animate loading text
+    const loadingTexts = [
+      'Loading awesomeness...',
+      'Preparing portfolio...',
+      'Almost there...',
+      'Get ready!'
+    ];
+    let textIndex = 0;
+    const loadingText = preloader ? preloader.querySelector('.preloader-text') : null;
+    
+    const textInterval = setInterval(() => {
+      if (loadingText && preloader.classList.contains('hidden')) {
+        clearInterval(textInterval);
+      } else if (loadingText) {
+        loadingText.textContent = loadingTexts[textIndex];
+        textIndex = (textIndex + 1) % loadingTexts.length;
+      }
+    }, 800);
+    
     if (!preloader || !welcomePage) return;
     
     console.log('Preloader setup started');
@@ -219,9 +238,20 @@ class PortfolioApp {
     }, observerOptions);
 
     // Observe elements with animation class
-    document.querySelectorAll('.animate-on-scroll').forEach(el => {
-      observer.observe(el);
-    });
+    const observeElements = () => {
+      document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        if (!el.dataset.observed) {
+          observer.observe(el);
+          el.dataset.observed = 'true';
+        }
+      });
+    };
+    
+    // Initial observation
+    observeElements();
+    
+    // Re-observe when new elements are added
+    setInterval(observeElements, 1000);
   }
 
   setupKeyboardShortcuts() {
@@ -276,6 +306,44 @@ class PortfolioApp {
     });
   }
 
+  // Click particle burst effect
+  createClickParticles(x, y) {
+    const colors = ['#6366f1', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b'];
+    
+    for (let i = 0; i < 12; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'click-particle';
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const angle = (Math.PI * 2 * i) / 12;
+      const velocity = 100 + Math.random() * 50;
+      
+      particle.style.cssText = `
+        position: fixed;
+        left: ${x}px;
+        top: ${y}px;
+        width: 8px;
+        height: 8px;
+        background: ${color};
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        box-shadow: 0 0 10px ${color};
+      `;
+      
+      document.body.appendChild(particle);
+      
+      gsap.to(particle, {
+        x: Math.cos(angle) * velocity,
+        y: Math.sin(angle) * velocity,
+        opacity: 0,
+        scale: 0,
+        duration: 0.8 + Math.random() * 0.4,
+        ease: 'power2.out',
+        onComplete: () => particle.remove()
+      });
+    }
+  }
+  
   // Add ripple effect to buttons
   addRippleEffect(e, button) {
     const ripple = document.createElement('span');
@@ -313,13 +381,86 @@ class PortfolioApp {
 // Initialize the application
 const app = new PortfolioApp();
 
-// Add ripple effect to all buttons
+// Add ripple effect to all buttons and click particles
 document.addEventListener('click', (e) => {
   const button = e.target.closest('.btn');
   if (button && app.addRippleEffect) {
     app.addRippleEffect(e, button);
   }
+  
+  // Add click particle burst
+  if (app.createClickParticles && !e.target.closest('input, textarea, select')) {
+    app.createClickParticles(e.clientX, e.clientY);
+  }
 });
+
+// Color shifting text effect for headings
+const addColorShiftEffect = () => {
+  const headings = document.querySelectorAll('.section-heading, .page-title, .hero-name');
+  headings.forEach(heading => {
+    if (!heading.classList.contains('gradient-shift')) {
+      heading.classList.add('gradient-shift');
+    }
+  });
+};
+
+setTimeout(addColorShiftEffect, 1000);
+
+// Typing effect for hero subtitle
+const setupTypingEffect = () => {
+  const subtitles = document.querySelectorAll('.hero-subtitle, .welcome-role');
+  subtitles.forEach(subtitle => {
+    if (!subtitle.dataset.typed) {
+      const text = subtitle.textContent;
+      subtitle.textContent = '';
+      subtitle.dataset.typed = 'true';
+      let i = 0;
+      
+      const typeInterval = setInterval(() => {
+        if (i < text.length) {
+          subtitle.textContent += text.charAt(i);
+          i++;
+        } else {
+          clearInterval(typeInterval);
+        }
+      }, 50);
+    }
+  });
+};
+
+setTimeout(setupTypingEffect, 1500);
+
+// Setup footer link navigation
+const setupFooterLinks = () => {
+  const footerLinks = document.querySelectorAll('.footer-links a[data-page], .footer-social a[data-page]');
+  footerLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetPage = link.getAttribute('data-page');
+      if (targetPage && window.navigationController) {
+        window.navigationController.navigateTo(targetPage);
+      }
+    });
+  });
+};
+
+setTimeout(setupFooterLinks, 2000);
+
+// Add continuous color shift to buttons
+const addButtonColorShift = () => {
+  const buttons = document.querySelectorAll('.btn-primary');
+  buttons.forEach(btn => {
+    gsap.to(btn, {
+      boxShadow: '0 16px 48px rgba(139, 92, 246, 0.8)',
+      duration: 2,
+      ease: 'power1.inOut',
+      yoyo: true,
+      repeat: -1
+    });
+  });
+};
+
+setTimeout(addButtonColorShift, 2000);
 
 // Export app instance
 if (typeof window !== 'undefined') {

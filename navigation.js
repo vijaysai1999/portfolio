@@ -20,7 +20,36 @@ class NavigationController {
     const pageButtons = document.querySelectorAll('[data-page]');
     console.log('Setting up', pageButtons.length, 'navigation buttons');
     
+    // Setup exit button hover to trigger crying
+    const exitButtons = document.querySelectorAll('[data-page="exit"]');
+    exitButtons.forEach(btn => {
+      btn.addEventListener('mouseenter', () => {
+        if (window.characterController) {
+          if (window.characterController.mainCharacter) {
+            window.characterController.mainCharacter.setEmotion('crying');
+          }
+          if (window.characterController.widgetCharacter) {
+            window.characterController.widgetCharacter.setEmotion('crying');
+          }
+        }
+      });
+      
+      btn.addEventListener('mouseleave', () => {
+        if (window.characterController) {
+          if (window.characterController.mainCharacter) {
+            window.characterController.mainCharacter.setEmotion('neutral');
+          }
+          if (window.characterController.widgetCharacter) {
+            window.characterController.widgetCharacter.setEmotion('neutral');
+          }
+        }
+      });
+    });
+    
     pageButtons.forEach(button => {
+      // Add shimmer effect to buttons
+      button.classList.add('shimmer-effect');
+      
       button.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -500,6 +529,14 @@ class NavigationController {
   animatePageElements(pageName) {
     const pageEl = document.getElementById(`page${this.capitalize(pageName)}`);
     if (!pageEl) return;
+    
+    // Add animate-on-scroll class to cards
+    const allCards = pageEl.querySelectorAll('.glass-card, .about-card, .service-card, .project-card, .education-card, .contact-card, .stat-card, .skill-card');
+    allCards.forEach(card => {
+      if (!card.classList.contains('animate-on-scroll')) {
+        card.classList.add('animate-on-scroll');
+      }
+    });
 
     // Animate cards and sections with stagger
     const cards = pageEl.querySelectorAll('.about-card, .service-card, .project-card, .education-card, .contact-card, .stat-card');
@@ -512,6 +549,21 @@ class NavigationController {
         ease: 'power2.out',
         delay: 0.2
       });
+    }
+    
+    // Animate profile image if on about page
+    if (pageName === 'about') {
+      const profileImage = pageEl.querySelector('.profile-image');
+      if (profileImage) {
+        gsap.from(profileImage, {
+          scale: 0,
+          rotation: 360,
+          opacity: 0,
+          duration: 1,
+          ease: 'elastic.out(1, 0.5)',
+          delay: 0.3
+        });
+      }
     }
 
     // Animate timeline items
