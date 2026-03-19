@@ -712,15 +712,19 @@ export default function App() {
               >
                 <div className="absolute -inset-4 bg-yellow-500 blur-3xl opacity-20 group-hover:opacity-40 transition-opacity animate-pulse" />
                 <div className="relative z-10 w-full aspect-square max-w-md mx-auto rounded-[60px] bg-zinc-200 dark:bg-zinc-800 overflow-hidden shadow-2xl border-8 border-white dark:border-zinc-900">
-                   {/* User Image Placeholder with high-quality feel */}
-                   <motion.img 
-                    whileHover={{ scale: 1.1, rotate: 2 }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                    src="https://picsum.photos/seed/vijay/800/800" 
-                    alt="Vijay Sai Kishore Babu" 
-                    className="w-full h-full object-cover transition-all duration-700"
-                    referrerPolicy="no-referrer"
-                   />
+                    {/* User Image: Upload your photo to the 'public' folder and name it 'profile.jpg' */}
+                    <motion.img 
+                     whileHover={{ scale: 1.1, rotate: 2 }}
+                     transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                     src="/profile.jpg" 
+                     alt="Vijay Sai Kishore Babu" 
+                     className="w-full h-full object-cover transition-all duration-700"
+                     referrerPolicy="no-referrer"
+                     onError={(e) => {
+                       // Fallback to placeholder if profile.jpg is missing
+                       (e.target as HTMLImageElement).src = "https://picsum.photos/seed/vijay/800/800";
+                     }}
+                    />
                 </div>
                 {/* Floating Badge */}
                 <motion.div 
